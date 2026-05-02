@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wordsoup Daily - A Cozy Word Search Game</title>
+<meta name="description" content="A beautifully crafted word search game with daily challenges, themed categories, travel routes, AI-generated puzzles, and a Time Rush mode. Available on the App Store.">
+<meta name="theme-color" content="#C0512D">
+<meta property="og:title" content="Wordsoup Daily - A Cozy Word Search Game">
+<meta property="og:description" content="Daily challenges, 50+ categories, travel routes, AI puzzles & Time Rush. Download free on the App Store.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F2;
+    --bg-warm: #F5F0E8;
+    --accent: #C0512D;
+    --accent-soft: #C0512D18;
+    --accent-glow: #C0512D22;
+    --text: #2C2520;
+    --text-secondary: #7A6E64;
+    --text-tertiary: #A89E94;
+    --surface: #FFFFFF;
+    --serif: 'Source Serif 4', 'Georgia', serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* --- Navigation --- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250, 247, 242, 0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(192, 81, 45, 0.08);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand {
+    font-family: var(--serif); font-size: 1.25rem; font-weight: 600;
+    color: var(--text); text-decoration: none;
+  }
+  .nav-brand span { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    font-size: 0.9rem; color: var(--text-secondary);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent) !important; color: #fff !important;
+    padding: 8px 20px; border-radius: 20px;
+    font-weight: 500; font-size: 0.85rem !important;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(192,81,45,0.3); }
+
+  /* --- Hero --- */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -40%; right: -20%;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1100px; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+  }
+  .hero-text { position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent-soft); color: var(--accent);
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 0.8rem; font-weight: 500;
+    margin-bottom: 20px;
+  }
+  .hero-badge svg { width: 14px; height: 14px; }
+  .hero h1 {
+    font-family: var(--serif); font-size: clamp(2.8rem, 5vw, 4rem);
+    font-weight: 700; line-height: 1.1;
+    color: var(--text); margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--accent);
+    font-weight: 600;
+  }
+  .hero-sub {
+    font-size: 1.15rem; line-height: 1.7;
+    color: var(--text-secondary); max-width: 440px;
+    margin-bottom: 36px;
+  }
+  .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent); color: #fff;
+    padding: 14px 28px; border-radius: 14px;
+    font-size: 1rem; font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(192,81,45,0.25);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(192,81,45,0.35); }
+  .btn-primary svg { width: 20px; height: 20px; }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--text-secondary); padding: 14px 24px;
+    font-size: 0.95rem; text-decoration: none;
+    transition: color 0.2s;
+  }
+  .btn-secondary:hover { color: var(--accent); }
+  .hero-phones {
+    position: relative; display: flex;
+    justify-content: center; align-items: center;
+    z-index: 1;
+  }
+  .phone-frame {
+    width: 260px; border-radius: 32px;
+    box-shadow: 0 20px 60px rgba(44,37,32,0.15), 0 2px 8px rgba(44,37,32,0.08);
+    overflow: hidden; position: relative;
+  }
+  .phone-frame img { width: 100%; display: block; }
+  .phone-back {
+    position: absolute; right: -30px; top: 30px;
+    transform: rotate(4deg); opacity: 0.7; z-index: -1;
+    width: 230px;
+  }
+
+  /* --- Stats --- */
+  .stats {
+    padding: 0 24px; margin-top: -20px; position: relative; z-index: 2;
+  }
+  .stats-inner {
+    max-width: 800px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    background: var(--surface);
+    padding: 32px 40px; border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(44,37,32,0.06);
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: var(--serif); font-size: 1.8rem;
+    font-weight: 700; color: var(--accent);
+  }
+  .stat-label {
+    font-size: 0.8rem; color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+
+  /* --- Features --- */
+  .features {
+    padding: 100px 24px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .section-label {
+    display: inline-block;
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 600; margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 1.05rem; color: var(--text-secondary);
+    max-width: 520px; line-height: 1.7; margin-bottom: 56px;
+  }
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .feature-card {
+    background: var(--surface);
+    padding: 32px 28px; border-radius: 18px;
+    border: 1px solid rgba(192,81,45,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(44,37,32,0.08);
+  }
+  .feature-icon {
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--accent-soft); border-radius: 14px;
+    font-size: 1.5rem; margin-bottom: 18px;
+  }
+  .feature-card h3 {
+    font-family: var(--serif); font-size: 1.15rem;
+    font-weight: 600; margin-bottom: 8px;
+  }
+  .feature-card p {
+    font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;
+  }
+
+  /* --- Showcase --- */
+  .showcase {
+    padding: 80px 24px 100px;
+    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-warm) 100%);
+  }
+  .showcase-inner {
+    max-width: 1100px; margin: 0 auto; text-align: center;
+  }
+  .showcase-scroll {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px; max-width: 720px; margin: 48px auto 0;
+  }
+  .showcase-item {
+    width: 100%; border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(44,37,32,0.1);
+    transition: transform 0.3s;
+  }
+  .showcase-item:hover { transform: scale(1.04); }
+  .showcase-item img { width: 100%; display: block; }
+
+  /* --- CTA --- */
+  .cta {
+    padding: 100px 24px;
+    text-align: center;
+  }
+  .cta-inner {
+    max-width: 600px; margin: 0 auto;
+  }
+  .cta h2 {
+    font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700; margin-bottom: 16px;
+  }
+  .cta p {
+    font-size: 1.1rem; color: var(--text-secondary);
+    line-height: 1.7; margin-bottom: 36px;
+  }
+
+  /* --- Footer --- */
+  footer {
+    padding: 40px 24px;
+    border-top: 1px solid rgba(192,81,45,0.08);
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-brand {
+    font-family: var(--serif); font-size: 1rem; font-weight: 600;
+    color: var(--text-tertiary);
+  }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-links a {
+    font-size: 0.85rem; color: var(--text-tertiary);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* --- Responsive --- */
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; text-align: center; }
+    .hero-sub { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-phones { margin-top: 40px; }
+    .phone-back { display: none; }
+    .phone-frame { width: 220px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); padding: 24px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .section-sub { margin-left: auto; margin-right: auto; text-align: center; }
+    .features { text-align: center; }
+    .showcase-scroll { max-width: 100%; }
+    .nav-links .hide-mobile { display: none; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .showcase-item { border-radius: 18px; }
+    .stats-inner { gap: 12px; }
+    .stat-num { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">Wordsoup <span>Daily</span></a>
+    <div class="nav-links">
+      <a href="#features" class="hide-mobile">Features</a>
+      <a href="#screenshots" class="hide-mobile">Screenshots</a>
+      <a href="https://apps.apple.com/app/id6764037160" class="nav-cta" target="_blank" rel="noopener">Download</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Free on the App Store
+      </div>
+      <h1>Your daily dose of <em>word magic</em></h1>
+      <p class="hero-sub">
+        A cozy word search game with fresh daily puzzles, themed categories, travel adventures, AI-generated grids, and an adrenaline-pumping Time Rush mode.
+      </p>
+      <div class="hero-actions">
+        <a href="https://apps.apple.com/app/id6764037160" class="btn-primary" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Download for iPhone
+        </a>
+        <a href="#features" class="btn-secondary">
+          Learn more &darr;
+        </a>
+      </div>
+    </div>
+    <div class="hero-phones">
+      <div class="phone-frame">
+        <img src="screenshots/home.png" alt="Wordsoup Daily home screen showing daily challenge, categories, travel mode, time rush, and AI creator">
+      </div>
+      <div class="phone-frame phone-back">
+        <img src="screenshots/gameplay.png" alt="Word search gameplay with colorful highlighted found words">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Categories</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Languages</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">&infin;</div>
+      <div class="stat-label">AI Puzzles</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">365</div>
+      <div class="stat-label">Daily Challenges / Year</div>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<section class="features" id="features">
+  <div class="section-label">Game Modes</div>
+  <h2 class="section-title">Six ways to play, one beautiful game</h2>
+  <p class="section-sub">Whether you have one minute or one hour, there's always a perfect puzzle waiting for you.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">&#x1F4C5;</div>
+      <h3>Daily Challenge</h3>
+      <p>A fresh puzzle every day. Build your streak, compete on leaderboards, and never miss a day.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#x1F30D;</div>
+      <h3>Travel Routes</h3>
+      <p>Embark on themed journeys across topics. Unlock new stops as you progress through each route.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#x1F3AF;</div>
+      <h3>Categories</h3>
+      <p>From Sea Animals to Cinema, pick any topic that sparks your curiosity. Three difficulty levels each.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#x23F1;&#xFE0F;</div>
+      <h3>Time Rush</h3>
+      <p>Race against the clock. Find words to earn extra seconds. How many levels can you clear?</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#x2728;</div>
+      <h3>Create with AI</h3>
+      <p>Type any theme and AI generates a unique word search on your device. Pirates? Astronomy? You decide.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#x1F500;</div>
+      <h3>Random Play</h3>
+      <p>Feeling adventurous? Jump into a random puzzle at your preferred difficulty. Share it with friends.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Screenshots -->
+<section class="showcase" id="screenshots">
+  <div class="showcase-inner">
+    <div class="section-label">Screenshots</div>
+    <h2 class="section-title">Beautifully crafted, down to every letter</h2>
+    <p class="section-sub" style="margin-left:auto;margin-right:auto;text-align:center;">Warm tones, elegant typography, and smooth animations make every puzzle feel like a moment of calm.</p>
+
+    <div class="showcase-scroll">
+      <div class="showcase-item">
+        <img src="screenshots/home.png" alt="Home screen">
+      </div>
+      <div class="showcase-item">
+        <img src="screenshots/gameplay.png" alt="Gameplay">
+      </div>
+      <div class="showcase-item">
+        <img src="screenshots/categories.png" alt="Categories">
+      </div>
+      <div class="showcase-item">
+        <img src="screenshots/travel.png" alt="Travel routes">
+      </div>
+      <div class="showcase-item">
+        <img src="screenshots/timerush.png" alt="Time Rush mode">
+      </div>
+      <div class="showcase-item">
+        <img src="screenshots/ai.png" alt="AI Creator">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <h2>Start your word search journey today</h2>
+    <p>Free to download. No account needed. Just open and play. Available in English, Spanish, German, French, Italian, Dutch, and Portuguese.</p>
+    <a href="https://apps.apple.com/app/id6764037160" class="btn-primary" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download for Free
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Wordsoup Daily</div>
+    <div class="footer-links">
+      <a href="https://dprados.github.io/projects/legal/privacywordsoup.html">Privacy Policy</a>
+      <a href="https://dprados.github.io/projects/legal/termswordsoup.html">Terms of Use</a>
+      <a href="mailto:dpappssupport@gmail.com">Support</a>
+      <a href="https://apps.apple.com/app/id6764037160" target="_blank" rel="noopener">App Store</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
