@@ -4,7 +4,7 @@
     "details": [
       {
         "appID": "LL4VAQA5BS.com.dprados.WordsoupDaily",
-        "paths": ["/projects/wordsoupdaily/*"]
+        "paths": ["/wordsoup/*"]
       }
     ]
   }
