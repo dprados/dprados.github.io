@@ -1,286 +1,706 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diego Prados — Apps</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diego Prados — Apps</title>
+<meta name="description" content="A small studio of iOS apps designed and built by Diego Prados.">
 
-        body {
-            font-family: 'Georgia', 'Garamond', serif;
-            background: #ffffff;
-            color: #000000;
-            line-height: 1.8;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
-        /* Navigation */
-        nav {
-            padding: 2rem;
-            border-bottom: 1px solid #000000;
-            position: sticky;
-            top: 0;
-            background: #000000;
-            z-index: 100;
-        }
+<style>
+  /* ============ TOKENS ============ */
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f4f1ea;
+    --paper-warm: #ebe6d9;
+    --paper-deep: #1a1715;
+    --ink-soft: #2a2522;
+    --muted: #6b635c;
+    --line: rgba(10, 10, 10, 0.12);
+    --accent: #d4ff3a;
+    --accent-deep: #9bc922;
 
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    --serif: 'Fraunces', 'Times New Roman', serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+  }
 
-        nav .logo {
-            font-size: 1.2rem;
-            font-weight: normal;
-            letter-spacing: 2px;
-            color: #ffffff;
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-        }
+  html { scroll-behavior: smooth; }
 
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            transition: opacity 0.3s ease;
-        }
+  body {
+    font-family: var(--serif);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    position: relative;
+  }
 
-        nav a:hover {
-            opacity: 0.6;
-        }
+  /* Subtle grain texture — printed-paper feel */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            width: 100%;
-        }
+  /* Cursor spotlight — follows mouse, very subtle */
+  .spotlight {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 600px;
+    pointer-events: none;
+    z-index: 2;
+    background: radial-gradient(circle, rgba(212, 255, 58, 0.08) 0%, transparent 60%);
+    transform: translate(-50%, -50%);
+    transition: opacity 0.4s ease;
+    opacity: 0;
+  }
 
-        /* Hero Section */
-        .hero {
-            padding: 5rem 2rem;
-            text-align: center;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+  body.spotlight-on .spotlight { opacity: 1; }
 
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: normal;
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-        }
+  /* ============ NAV ============ */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    transition: background 0.4s ease, color 0.4s ease, backdrop-filter 0.4s ease, padding 0.3s ease;
+  }
 
-        .hero p {
-            font-size: 1.1rem;
-            color: #333333;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 300;
-        }
+  nav.scrolled {
+    background: rgba(244, 241, 234, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid var(--line);
+  }
 
-        /* Apps Section */
-        .apps-section {
-            padding: 4rem 2rem;
-            border-top: 1px solid #000000;
-            border-bottom: 1px solid #000000;
-        }
+  nav.on-dark {
+    color: var(--paper);
+  }
 
-        .apps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-        }
+  nav.on-dark.scrolled {
+    background: rgba(26, 23, 21, 0.85);
+    border-bottom-color: rgba(244, 241, 234, 0.1);
+  }
 
-        .app-card {
-            padding: 2rem;
-            border: 1px solid #000000;
-            transition: all 0.3s ease;
-            text-align: left;
-        }
+  nav .mark {
+    font-weight: 500;
+  }
 
-        .app-card:hover {
-            background: #f5f5f5;
-        }
+  nav .mark .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
 
-        .app-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(0.85); }
+  }
 
-        .app-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            font-weight: normal;
-            letter-spacing: 1px;
-        }
+  nav .links {
+    display: flex;
+    gap: 2rem;
+  }
 
-        .app-card p {
-            color: #333333;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
+  nav a {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
 
-        .app-card a {
-            display: inline-block;
-            padding: 0.6rem 1.5rem;
-            background: #000000;
-            color: #ffffff;
-            text-decoration: none;
-            border: 1px solid #000000;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
+  nav a:hover { opacity: 0.6; }
 
-        .app-card a:hover {
-            background: #ffffff;
-            color: #000000;
-        }
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    padding: 9rem 2.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 3;
+  }
 
-        .app-card.empty {
-            border: 1px dashed #999999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            min-height: 200px;
-            color: #999999;
-        }
+  .hero-meta {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 4rem;
+    opacity: 0;
+    animation: fade-up 0.9s ease 0.1s forwards;
+  }
 
-        .app-card.empty:hover {
-            background: #fafafa;
-        }
+  .hero-meta .right { text-align: right; }
 
-        /* Footer */
-        footer {
-            padding: 3rem 2rem;
-            margin-top: auto;
-            background: #000000;
-        }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(3.5rem, 11vw, 11rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    font-variation-settings: "opsz" 144;
+    margin-bottom: 2rem;
+  }
 
-        footer .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-        }
+  .hero h1 .line {
+    display: block;
+    overflow: hidden;
+  }
 
-        footer h4 {
-            color: #ffffff;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            font-weight: normal;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
+  .hero h1 .line span {
+    display: inline-block;
+    transform: translateY(110%);
+    animation: rise 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
 
-        footer ul {
-            list-style: none;
-        }
+  .hero h1 .line:nth-child(1) span { animation-delay: 0.2s; }
+  .hero h1 .line:nth-child(2) span { animation-delay: 0.35s; }
+  .hero h1 .line:nth-child(3) span { animation-delay: 0.5s; }
 
-        footer li {
-            margin-bottom: 0.6rem;
-        }
+  @keyframes rise {
+    to { transform: translateY(0); }
+  }
 
-        footer a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: opacity 0.3s ease;
-        }
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent-deep);
+    position: relative;
+  }
 
-        footer a:hover {
-            opacity: 0.6;
-        }
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    padding-top: 3rem;
+    border-top: 1px solid var(--line);
+    opacity: 0;
+    animation: fade-up 0.9s ease 0.8s forwards;
+  }
 
-        footer .footer-bottom {
-            border-top: 1px solid #ffffff;
-            padding-top: 2rem;
-            margin-top: 2rem;
-            text-align: center;
-            color: #999999;
-            font-size: 0.8rem;
-        }
+  .hero-bottom p {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    max-width: 32rem;
+    color: var(--ink-soft);
+  }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
+  .hero-bottom .stats {
+    display: flex;
+    gap: 3rem;
+    justify-content: flex-end;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
 
-            .hero p {
-                font-size: 1rem;
-            }
+  .hero-bottom .stat .num {
+    display: block;
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.02em;
+  }
 
-            nav ul {
-                gap: 1rem;
-            }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-            .apps-grid {
-                grid-template-columns: 1fr;
-            }
+  /* ============ INDEX (PROJECTS) ============ */
+  .index {
+    background: var(--paper-deep);
+    color: var(--paper);
+    padding: 6rem 0 4rem;
+    position: relative;
+    z-index: 3;
+  }
 
-            footer .container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  .index-header {
+    padding: 0 2.5rem;
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid rgba(244, 241, 234, 0.15);
+    padding-bottom: 1.5rem;
+  }
+
+  .index-header h2 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 100;
+  }
+
+  .index-header h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  /* Project row */
+  .project {
+    display: grid;
+    grid-template-columns: 80px 1fr 2fr 1fr 80px;
+    gap: 2rem;
+    padding: 2.2rem 2.5rem;
+    align-items: center;
+    border-bottom: 1px solid rgba(244, 241, 234, 0.12);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    transition: background 0.45s ease;
+  }
+
+  .project::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 0;
+  }
+
+  .project:hover::before {
+    height: 100%;
+  }
+
+  .project:hover {
+    color: var(--ink);
+  }
+
+  .project:hover .num,
+  .project:hover .meta {
+    color: var(--ink);
+    opacity: 0.7;
+  }
+
+  .project > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .project .num {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    color: rgba(244, 241, 234, 0.4);
+    transition: color 0.4s ease;
+  }
+
+  .project .name {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-variation-settings: "opsz" 100;
+  }
+
+  .project .name em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .project .desc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: rgba(244, 241, 234, 0.7);
+    max-width: 28rem;
+    transition: color 0.4s ease;
+  }
+
+  .project:hover .desc { color: var(--ink); }
+
+  .project .meta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(244, 241, 234, 0.5);
+    transition: color 0.4s ease;
+  }
+
+  .project .arrow {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 300;
+    text-align: right;
+    transform: translateX(0);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    color: rgba(244, 241, 234, 0.5);
+  }
+
+  .project:hover .arrow {
+    transform: translateX(8px);
+    color: var(--ink);
+  }
+
+  .project:last-child { border-bottom: none; }
+
+  /* ============ COLOPHON / FOOTER ============ */
+  footer {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 5rem 2.5rem 2.5rem;
+    position: relative;
+    z-index: 3;
+  }
+
+  .colophon {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 4rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .colophon-mark {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 2.2rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 100;
+  }
+
+  .colophon-mark em {
+    font-style: italic;
+    color: var(--accent-deep);
+  }
+
+  .colophon-mark .sub {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+
+  .colophon h4 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    font-weight: 500;
+  }
+
+  .colophon ul { list-style: none; }
+
+  .colophon li { margin-bottom: 0.5rem; }
+
+  .colophon a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.95rem;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  .colophon a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.3s ease;
+  }
+
+  .colophon a:hover::after { width: 100%; }
+
+  .footer-bottom {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 880px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .hero-meta { font-size: 0.65rem; flex-direction: column; gap: 0.6rem; align-items: flex-start; margin-bottom: 2.5rem; }
+    .hero-meta .right { text-align: left; }
+    .hero-bottom {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .hero-bottom .stats { justify-content: flex-start; gap: 2rem; }
+    .hero-bottom .stat .num { font-size: 1.8rem; }
+
+    .index { padding: 4rem 0 2rem; }
+    .index-header { padding: 0 1.5rem; margin-bottom: 2rem; }
+    .index-header { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+
+    .project {
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem 1.2rem;
+      padding: 1.8rem 1.5rem;
+    }
+    .project .num { grid-column: 1; grid-row: 1; }
+    .project .name { grid-column: 2; grid-row: 1; }
+    .project .arrow { grid-column: 3; grid-row: 1; font-size: 1.5rem; }
+    .project .desc { grid-column: 1 / -1; grid-row: 2; font-size: 0.9rem; }
+    .project .meta { grid-column: 1 / -1; grid-row: 3; font-size: 0.65rem; }
+
+    footer { padding: 3rem 1.5rem 2rem; }
+    .colophon {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding-bottom: 2.5rem;
+    }
+    .colophon-mark { font-size: 1.8rem; }
+    .footer-bottom { flex-direction: column; gap: 0.6rem; }
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="container">
-            <div class="logo">Diego Prados</div>
-            <ul>
-                <li><a href="#apps">Apps</a></li>
-                <li><a href="#legal">Legal</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <!-- Apps Section -->
-    <section class="apps-section" id="apps">
-        <div class="container">
-            <div class="apps-grid">
-                <!-- Photocell App -->
-                <div class="app-card">
-                    <div class="app-icon">⚡</div>
-                    <h3>Photocells</h3>
-                    <p>Turn your iPhone into a precision photocell for timing and chronometry. Perfect for track, cycling, motorsports, and more.</p>
-                    <a href="/projects/photocell/">View</a>
-                </div>
+<div class="spotlight" id="spotlight"></div>
 
-                <!-- Placeholder for future apps -->
-                <div class="app-card empty">
-                    <p>Coming Soon</p>
-                </div>
+<!-- NAV -->
+<nav>
+  <div class="mark"><span class="dot"></span>Diego Prados</div>
+  <div class="links">
+    <a href="#index">Index</a>
+    <a href="#colophon">More</a>
+  </div>
+</nav>
 
-                <div class="app-card empty">
-                    <p>Coming Soon</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-meta">
+    <div>
+      <span>Independent iOS Studio</span>
+    </div>
+    <div class="right">
+      <span>Est. 2018</span>
+    </div>
+  </div>
 
+  <h1>
+    <span class="line"><span>Small apps,</span></span>
+    <span class="line"><span><em>made with</em></span></span>
+    <span class="line"><span>passion.</span></span>
+  </h1>
+
+  <div class="hero-bottom">
+    <p>An ongoing catalogue of iOS apps — designed, engineered, and shipped from start to finish. Tools for athletes, players, and quiet afternoons. Each one built end to end, the way it should be.</p>
+
+    <div class="stats">
+      <div class="stat"><span class="num">07</span>Apps shipped</div>
+    </div>
+  </div>
+</section>
+
+<!-- INDEX -->
+<section class="index" id="index">
+  <div class="index-header">
+    <h2>The <em>Index</em></h2>
+  </div>
+
+  <a class="project" href="/projects/photocell/">
+    <div class="num">N° 01</div>
+    <div class="name"><em>Photo</em>cells</div>
+    <div class="desc">Turn your iPhone into a precision photocell for timing and chronometry. Perfect for track, cycling, motorsports.</div>
+    <div class="meta">iOS</div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="project" href="https://hybridflowapp.com/" target="_blank" rel="noopener">
+    <div class="num">N° 02</div>
+    <div class="name">Hybrid <em>Flow</em></div>
+    <div class="desc">Metronome-based pacing for Hyrox, CrossFit, and endurance athletes. Train at constant paces, recover better.</div>
+    <div class="meta">iOS · watchOS</div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="project" href="https://dprados.github.io/wordsoup/" target="_blank" rel="noopener">
+    <div class="num">N° 03</div>
+    <div class="name">Wordsoup <em>Daily</em></div>
+    <div class="desc">A cozy word search game with fresh daily puzzles, themed categories, travel routes, and AI-generated grids.</div>
+    <div class="meta">iOS</div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="project" href="https://dprados.github.io/weeklybite/" target="_blank" rel="noopener">
+    <div class="num">N° 04</div>
+    <div class="name">Weekly<em>Bite</em></div>
+    <div class="desc">Plan your week of meals, generate the shopping list automatically, and never wonder "what's for dinner?" again.</div>
+    <div class="meta">iOS</div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="project" href="https://apps.apple.com/es/app/ingamestats-hoops/id6444737771" target="_blank" rel="noopener">
+    <div class="num">N° 05</div>
+    <div class="name">inGame<em>Stats</em></div>
+    <div class="desc">Live basketball stat-tracker built so adding a new sport is mostly a schema swap. Indoor football next.</div>
+    <div class="meta">iOS</div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="project" href="https://checkyourmotion.com/" target="_blank" rel="noopener">
+    <div class="num">N° 06</div>
+    <div class="name">Check your<em>MOtion</em></div>
+    <div class="desc">Four-app suite supporting a sports-injury prevention methodology used by amateur and elite athletes.</div>
+    <div class="meta">iOS</div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="project" href="https://apps.apple.com/ar/app/parcheesi-fullhd/id1067674552?l=en-GB" target="_blank" rel="noopener">
+    <div class="num">N° 07</div>
+    <div class="name">Parcheesi <em>FullHD</em></div>
+    <div class="desc">The classic board game, designed and built for Apple TV. Custom dice physics via Core Animation, hand-drawn pieces.</div>
+    <div class="meta">tvOS</div>
+    <div class="arrow">→</div>
+  </a>
+</section>
+
+<!-- COLOPHON -->
+<footer id="colophon">
+  <div class="colophon">
+    <div class="colophon-mark">
+      Designed, built &amp;<br>shipped <em>end to end.</em>
+      <span class="sub">Diego Prados · iOS Engineer</span>
+    </div>
+
+    <div>
+      <h4>Catalogue</h4>
+      <ul>
+        <li><a href="/projects/photocell/">Photocells</a></li>
+        <li><a href="https://hybridflowapp.com/" target="_blank" rel="noopener">Hybrid Flow</a></li>
+        <li><a href="https://dprados.github.io/wordsoup/" target="_blank" rel="noopener">Wordsoup Daily</a></li>
+        <li><a href="https://dprados.github.io/weeklybite/" target="_blank" rel="noopener">WeeklyBite</a></li>
+        <li><a href="https://apps.apple.com/es/app/ingamestats-hoops/id6444737771" target="_blank" rel="noopener">inGameStats</a></li>
+        <li><a href="https://checkyourmotion.com/" target="_blank" rel="noopener">Check yourMOtion</a></li>
+        <li><a href="https://apps.apple.com/ar/app/parcheesi-fullhd/id1067674552?l=en-GB" target="_blank" rel="noopener">Parcheesi FullHD</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Elsewhere</h4>
+      <ul>
+        <li><a href="mailto:dpappssupport@gmail.com">Support</a></li>
+        <li><a href="mailto:diegopradosgarcia@gmail.com">Work inquiries</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="https://dprados.github.io/legal/terms-of-service.html">Terms</a></li>
+        <li><a href="https://dprados.github.io/legal/privacy-policy.html">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div>© 2026 Diego Prados</div>
+  </div>
+</footer>
+
+<script>
+  // Cursor spotlight (desktop only, opt-in via fine pointer)
+  if (window.matchMedia('(pointer: fine)').matches) {
+    const spot = document.getElementById('spotlight');
+    document.body.classList.add('spotlight-on');
+    window.addEventListener('mousemove', (e) => {
+      spot.style.transform = `translate(${e.clientX - 300}px, ${e.clientY - 300}px)`;
+    });
+  }
+
+  // Adaptive nav: condense on scroll, invert color over the dark index section
+  const navEl = document.querySelector('nav');
+  const darkSection = document.getElementById('index');
+
+  function updateNav() {
+    // Scrolled state
+    if (window.scrollY > 40) {
+      navEl.classList.add('scrolled');
+    } else {
+      navEl.classList.remove('scrolled');
+    }
+    // Color inversion when nav is over the dark section
+    const rect = darkSection.getBoundingClientRect();
+    const navH = navEl.offsetHeight;
+    if (rect.top <= navH / 2 && rect.bottom >= navH / 2) {
+      navEl.classList.add('on-dark');
+    } else {
+      navEl.classList.remove('on-dark');
+    }
+  }
+
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+</script>
+
+<<<<<<< Updated upstream
     <!-- Footer -->
     <footer id="legal">
         <div class="container">
@@ -308,5 +728,7 @@
             <p>&copy; 2026 Diego Prados</p>
         </div>
     </footer>
+=======
+>>>>>>> Stashed changes
 </body>
 </html>
