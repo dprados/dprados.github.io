@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnada: cuadrante de turnos, pluses y saldo de horas</title>
+<meta name="description" content="Monta tu cuadrante de turnos en segundos y llévalo al detalle que quieras: pluses, horas extra, guardias de 24 h, festivos de tu comunidad y tu saldo de horas. Sin cuenta, sin anuncios. iPhone, iPad y Android.">
+<meta name="theme-color" content="#3B3F9E" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E0F1A" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://dprados.github.io/turnada/">
+<link rel="alternate" hreflang="es" href="https://dprados.github.io/turnada/">
+<link rel="alternate" hreflang="en" href="https://dprados.github.io/turnada/en/">
+<link rel="alternate" hreflang="de" href="https://dprados.github.io/turnada/de/">
+<link rel="alternate" hreflang="x-default" href="https://dprados.github.io/turnada/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Turnada">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:url" content="https://dprados.github.io/turnada/">
+<meta property="og:title" content="Turnada: tus turnos, tus pluses y tus horas, al detalle">
+<meta property="og:description" content="Tu cuadrante en segundos y, si quieres, hasta el último detalle. Pluses, horas extra y saldo de horas calculados. Sin cuenta, sin anuncios.">
+<meta property="og:image" content="https://dprados.github.io/turnada/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Icono de Turnada con el texto: Tus turnos, tus pluses y tus horas, al detalle">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="apple-itunes-app" content="app-id=6819271997">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="./"><img src="img/icon-192.png" alt="" width="34" height="34">Turnada</a>
+    <nav class="nav-links" aria-label="Secciones">
+      <a href="#funciones">Funciones</a>
+      <a href="#diferente">Por qué Turnada</a>
+      <a href="#precio">Precio</a>
+      <a href="support.html">Ayuda</a>
+    </nav>
+    <nav class="lang" aria-label="Idioma">
+      <a href="./" hreflang="es" lang="es" aria-current="page">ES</a>
+      <a href="en/" hreflang="en" lang="en">EN</a>
+      <a href="de/" hreflang="de" lang="de">DE</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <img class="hero-icon" src="img/icon-256.png" alt="Icono de Turnada" width="84" height="84">
+      <h1>Tu cuadrante en segundos. <span class="hl">Tus turnos, al detalle que quieras.</span></h1>
+      <p class="lede">Turnada te <strong>ahorra tiempo</strong>: eliges tu rotación y tienes el año hecho. Y cuando lo necesitas, apunta cada cambio, cada hora extra y cada plus. <strong>Sencilla por defecto, tan completa como tu nómina.</strong></p>
+      <div class="stores">
+        <a class="store" href="https://apps.apple.com/app/id6819271997" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5v7m0 0l-3-3m3 3l3-3M8.5 17h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><small>Descargar en el</small><b>App Store</b></span>
+        </a>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.dprados.turnada" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8v16.4a.8.8 0 0 0 1.2.7l13.6-8.2a.8.8 0 0 0 0-1.4L7.2 3.1A.8.8 0 0 0 6 3.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          <span><small>Disponible en</small><b>Google Play</b></span>
+        </a>
+      </div>
+      <ul class="trust">
+        <li>Gratis para empezar</li>
+        <li>Sin cuenta</li>
+        <li>Sin anuncios</li>
+        <li>iPhone, iPad y Android</li>
+      </ul>
+    </div>
+
+    <div class="mock" role="img" aria-label="Ejemplo de cuadrante de octubre en Turnada con turnos de mañana, tarde, noche y libranzas">
+      <div class="cal" aria-hidden="true">
+        <div class="cal-head"><b>Octubre 2026</b></div>
+        <div class="cal-grid">
+          <span class="dow" aria-hidden="true">L</span>
+          <span class="dow" aria-hidden="true">M</span>
+          <span class="dow" aria-hidden="true">X</span>
+          <span class="dow" aria-hidden="true">J</span>
+          <span class="dow" aria-hidden="true">V</span>
+          <span class="dow" aria-hidden="true">S</span>
+          <span class="dow" aria-hidden="true">D</span>
+          <span class="d e"></span>
+          <span class="d e"></span>
+          <span class="d e"></span>
+          <span class="d M">1<i>M</i></span>
+          <span class="d M">2<i>M</i></span>
+          <span class="d T">3<i>T</i></span>
+          <span class="d T">4<i>T</i></span>
+          <span class="d N">5<i>N</i></span>
+          <span class="d N">6<i>N</i></span>
+          <span class="d L">7<i>L</i></span>
+          <span class="d L">8<i>L</i></span>
+          <span class="d L note">9<i>L</i></span>
+          <span class="d L">10<i>L</i></span>
+          <span class="d M">11<i>M</i></span>
+          <span class="d M hol">12<i>M</i></span>
+          <span class="d T">13<i>T</i></span>
+          <span class="d T">14<i>T</i></span>
+          <span class="d N">15<i>N</i></span>
+          <span class="d N">16<i>N</i></span>
+          <span class="d L">17<i>L</i></span>
+          <span class="d L">18<i>L</i></span>
+          <span class="d L">19<i>L</i></span>
+          <span class="d L today">20<i>L</i></span>
+          <span class="d M">21<i>M</i></span>
+          <span class="d M">22<i>M</i></span>
+          <span class="d T note">23<i>T</i></span>
+          <span class="d T">24<i>T</i></span>
+          <span class="d N">25<i>N</i></span>
+          <span class="d N">26<i>N</i></span>
+          <span class="d L">27<i>L</i></span>
+          <span class="d L">28<i>L</i></span>
+          <span class="d L">29<i>L</i></span>
+          <span class="d L">30<i>L</i></span>
+          <span class="d M">31<i>M</i></span>
+        </div>
+        <div class="legend">
+          <span style="--c: var(--sun)">Mañana</span>
+          <span style="--c: var(--coral)">Tarde</span>
+          <span style="--c: var(--night)">Noche</span>
+          <span style="--c: var(--slate)">Libre</span>
+          <span style="--c: var(--accent)">Festivo</span>
+        </div>
+      </div>
+      <div class="float f1" aria-hidden="true">Saldo de horas<b>+6 h 30 min</b></div>
+      <div class="float f2" aria-hidden="true">Libráis juntos<b>4 días este mes</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="tiempo" class="alt">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Ahorra tiempo</p>
+      <h2>Tu año de turnos, listo antes de que se enfríe el café</h2>
+      <p class="sub">Nada de rellenar día a día. Turnada repite tu rotación durante años y tú solo tocas lo que cambia.</p>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <h3>Elige tu profesión y tu rotación</h3>
+        <p>Rotaciones listas para sanidad, bomberos, policía, emergencias, industria… O crea la tuya, con el ciclo que sea.</p>
+        <div class="chips">
+          <span class="chip" style="--c: var(--teal); --t: var(--teal-t)">Guardias 24 h 1-3</span>
+          <span class="chip" style="--c: var(--teal); --t: var(--teal-t)">1-4</span>
+          <span class="chip" style="--c: var(--teal); --t: var(--teal-t)">1-5</span>
+          <span class="chip" style="--c: var(--sun); --t: var(--sun-t)">2-2-2-4</span>
+          <span class="chip" style="--c: var(--night); --t: var(--night-t)">Policía Nacional 2-2-2-6</span>
+          <span class="chip" style="--c: var(--coral); --t: var(--coral-t)">Mañana · Tarde · Noche</span>
+        </div>
+      </li>
+      <li class="step">
+        <h3>Pinta o haz una foto</h3>
+        <p>Rellena días con el dedo en modo pintar o selecciona varios a la vez. ¿Te dan el cuadrante en papel? Hazle una foto y Turnada lo lee en tu móvil.<span class="pro">Pro</span></p>
+      </li>
+      <li class="step">
+        <h3>Listo para años</h3>
+        <p>La rotación sigue sin cortes en diciembre. Cambia un día suelto y el resto se queda donde estaba.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="funciones">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Al detalle que quieras</p>
+      <h2>Sencilla por defecto. Tan profunda como necesites.</h2>
+      <p class="sub">Si solo quieres ver qué turno te toca, ya está. Si quieres saber cuánto vas a cobrar en pluses y cuántas horas te deben, también.</p>
+    </div>
+
+    <div class="features">
+      <article class="feature wide">
+        <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M7 15h3"/></svg></div>
+        <h3>Tus pluses, calculados a tu manera<span class="pro">Pro</span></h3>
+        <p>Parte de una plantilla y ajústala a tu nómina. Los importes son orientativos: tú mandas.</p>
+        <div class="tpl"><span>España genérico</span><span>Sanidad pública</span><span>Bomberos 24 h</span><span>Alemania §3b</span><span>TVöD</span><span>Austria</span></div>
+        <ul class="ticks">
+          <li>Nocturnidad, domingos y festivos por hora, por turno, por tramos de horas, en % del sueldo o al mes</li>
+          <li>Por tramos: una guardia de 24 h que cae en festivo cuenta 2 festivos, como en tu nómina</li>
+          <li>Horas extra con tres precios: diurna, nocturna o festiva, y nocturna y festiva</li>
+          <li>Turnos que se pagan aparte: fijo por turno o por hora, con precio de festivo</li>
+          <li>Quita un plus en un día concreto sin tocar el resto</li>
+          <li>Subidas de sueldo desde una fecha: los meses pasados conservan sus precios</li>
+          <li>Sábados o domingos pueden contar como festivo</li>
+          <li>Alemania: muestra la parte exenta según el §3b</li>
+        </ul>
+      </article>
+
+      <article class="feature">
+        <div class="ico" style="--ic: var(--accent-soft); --ict: var(--accent-ink)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4M8 14h4"/></svg></div>
+        <h3>Cada día, con todo lo que pasó</h3>
+        <ul class="ticks">
+          <li>Cambia un turno o añade horas extra y doblajes</li>
+          <li>Notas siempre visibles en el calendario</li>
+          <li>Tus eventos del calendario del móvil junto a tus turnos, y añade uno nuevo desde cualquier día</li>
+          <li>Cambios de turno: quién debe a quién<span class="pro">Pro</span></li>
+          <li>Localizadas, otro trabajo y cursos que no computan</li>
+          <li>Turnos de horas extra aparte de tu cuadrante</li>
+        </ul>
+      </article>
+
+      <article class="feature">
+        <div class="ico" style="--ic: color-mix(in srgb, var(--teal) 18%, var(--surface)); --ict: var(--teal)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></div>
+        <h3>Tu saldo de horas<span class="pro">Pro</span></h3>
+        <ul class="ticks">
+          <li>Jornada anual o semanal, con cambios durante el año</li>
+          <li>Cuenta desde el día en que empiezas</li>
+          <li>Vacaciones y bajas computan; reducción por noche si tu convenio la tiene</li>
+          <li>Saldo arrastrado del año anterior y gráfico mes a mes</li>
+        </ul>
+      </article>
+
+      <article class="feature">
+        <div class="ico" style="--ic: var(--accent-soft); --ict: var(--accent-ink)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg></div>
+        <h3>Festivos de tu comunidad</h3>
+        <ul class="ticks">
+          <li>Festivos de España por comunidad autónoma, de Alemania por Land y de Austria</li>
+          <li>Añade los locales de tu municipio</li>
+        </ul>
+      </article>
+
+      <article class="feature">
+        <div class="ico" style="--ic: color-mix(in srgb, var(--rose) 22%, var(--surface)); --ict: var(--rose)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9.5" r="2.5"/><path d="M3 20c.5-3.5 3-5.5 6-5.5s5.5 2 6 5.5M15 15c2.8-.4 5 1.3 5.6 4.5"/></svg></div>
+        <h3>Tu pareja y tus compañeros</h3>
+        <ul class="ticks">
+          <li>Añade el cuadrante de otra persona y mira qué días libráis juntos</li>
+          <li>Más personas con Pro<span class="pro">Pro</span></li>
+          <li>Comparte tu cuadrante entre iPhone y Android con un archivo</li>
+        </ul>
+      </article>
+
+      <article class="feature">
+        <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 10v3.5l2 1.5M5 4L3 6M19 4l2 2"/></svg></div>
+        <h3>Widgets, despertadores y avisos</h3>
+        <ul class="ticks">
+          <li>Widgets de hoy y de próximos días</li>
+          <li>Widgets de mes y de pluses<span class="pro">Pro</span></li>
+          <li>Despertador según el turno y recordatorios</li>
+          <li>Aviso si no descansas 12 h entre jornadas (11 h en Alemania)<span class="pro">Pro</span></li>
+        </ul>
+      </article>
+
+      <article class="feature">
+        <div class="ico" style="--ic: color-mix(in srgb, var(--violet) 20%, var(--surface)); --ict: var(--violet)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 14h6M9 17h4"/></svg></div>
+        <h3>Exporta y guarda</h3>
+        <ul class="ticks">
+          <li>PDF del mes, al calendario o a una hoja de cálculo<span class="pro">Pro</span></li>
+          <li>Copia de seguridad en un archivo</li>
+          <li>Sincronización con iCloud en iPhone y iPad</li>
+          <li>32 colores para tus turnos, o el que tú quieras</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="diferente" class="alt">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Por qué Turnada</p>
+      <h2>Lo que otras apps de turnos no hacen</h2>
+      <p class="sub">Está pensada para quien trabaja a turnos de verdad: guardias que cruzan la medianoche, convenios con letra pequeña y cuadrantes que cambian.</p>
+    </div>
+    <ul class="vs">
+      <li><b>Una guardia de 24 h en festivo cuenta como lo que es</b><span>Los pluses se pueden calcular por tramos de horas: si la guardia pasa 16 h en festivo, son 2 festivos.</span></li>
+      <li><b>Subidas de sueldo sin reescribir el pasado</b><span>Pon la fecha de la subida y los meses anteriores siguen con sus precios.</span></li>
+      <li><b>Horas extra con tres precios</b><span>Diurna, nocturna o festiva, y nocturna y festiva. Cada hora se paga como toca.</span></li>
+      <li><b>Un saldo de horas que empieza cuando empiezas tú</b><span>Con vacaciones y bajas acreditadas, cambios de jornada durante el año y arrastre del año anterior.</span></li>
+      <li><b>Rotaciones que no se acaban en diciembre</b><span>Tu ciclo sigue durante años, sin volver a montarlo cada enero.</span></li>
+      <li><b>El cuadrante en papel, en tu móvil con una foto</b><span>El texto se reconoce en el propio teléfono: la foto no se sube a ningún sitio.</span></li>
+      <li><b>Cambios de turno con las cuentas claras</b><span>Quién te debe un turno y a quién se lo debes tú, sin libreta.</span></li>
+      <li><b>Tú con iPhone, tu pareja con Android</b><span>Compartís el cuadrante igual y veis los días que libráis juntos.</span></li>
+      <li><b>Quita un plus solo un día</b><span>¿Ese festivo no se pagó? Lo desactivas en ese día y el resto del mes sigue igual.</span></li>
+      <li><b>Sin cuenta, sin anuncios, sin rastreo</b><span>Tus turnos y tu sueldo no salen de tu móvil (ni de tu iCloud).</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="capturas">
+  <div class="wrap">
+    <div class="head center">
+      <p class="eyebrow">Así se ve</p>
+      <h2>Clara a primera vista</h2>
+    </div>
+    <div class="gallery" tabindex="0" aria-label="Capturas de Turnada">
+      <figure><div class="shot"><img src="screenshots/es/1.webp" alt="Calendario del mes con los turnos de colores" width="600" height="1304" loading="lazy" decoding="async" onerror="this.style.visibility='hidden'"></div><figcaption>Tu cuadrante, listo en segundos</figcaption></figure>
+      <figure><div class="shot"><img src="screenshots/es/2.webp" alt="Resumen del mes con los pluses calculados" width="600" height="1304" loading="lazy" decoding="async" onerror="this.style.visibility='hidden'"></div><figcaption>Sabe cuánto cobras en pluses</figcaption></figure>
+      <figure><div class="shot"><img src="screenshots/es/3.webp" alt="Saldo de horas del año" width="600" height="1304" loading="lazy" decoding="async" onerror="this.style.visibility='hidden'"></div><figcaption>Las horas que debes o te deben</figcaption></figure>
+      <figure><div class="shot"><img src="screenshots/es/4.webp" alt="Detalle de un día con horas extra y notas" width="600" height="1304" loading="lazy" decoding="async" onerror="this.style.visibility='hidden'"></div><figcaption>Cada día, al detalle que quieras</figcaption></figure>
+      <figure><div class="shot"><img src="screenshots/es/5.webp" alt="Cuadrantes de varias personas y días libres en común" width="600" height="1304" loading="lazy" decoding="async" onerror="this.style.visibility='hidden'"></div><figcaption>Mira cuándo libráis juntos</figcaption></figure>
+      <figure><div class="shot"><img src="screenshots/es/6.webp" alt="Configuración de pluses y salario" width="600" height="1304" loading="lazy" decoding="async" onerror="this.style.visibility='hidden'"></div><figcaption>Tu convenio, hasta el último plus</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="privacidad" class="alt">
+  <div class="wrap">
+    <div class="privacy-band">
+      <h2>Tus turnos son tuyos</h2>
+      <p>Turnada no tiene servidores con tus datos. Todo se guarda en tu dispositivo y, en iPhone, en tu propio iCloud si lo tienes activado.</p>
+      <ul class="marks">
+        <li>Sin cuenta</li>
+        <li>Sin anuncios</li>
+        <li>Sin rastreo</li>
+        <li>Sin analítica propia</li>
+      </ul>
+      <p><a href="privacy.html">Lee la política de privacidad</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="precio">
+  <div class="wrap">
+    <div class="head center">
+      <p class="eyebrow">Precio</p>
+      <h2>Gratis para organizarte. Pro para tu nómina.</h2>
+      <p class="sub">Lo esencial es gratis y sin límite de tiempo. Pro añade las cuentas.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Gratis</h3>
+        <p class="price">Para siempre</p>
+        <ul class="ticks">
+          <li>Calendario y rotaciones durante años</li>
+          <li>Modo pintar y selección múltiple</li>
+          <li>Festivos de tu región y locales</li>
+          <li>Notas, cambios y horas extra en cada día</li>
+          <li>Tus eventos del calendario junto a tus turnos</li>
+          <li>Widgets de hoy y próximos días</li>
+          <li>Despertadores por turno y recordatorios</li>
+          <li>Copia de seguridad y sincronización con iCloud</li>
+          <li>El cuadrante de una persona más</li>
+        </ul>
+      </div>
+      <div class="plan pro-plan">
+        <h3><span>Turnada Pro</span></h3>
+        <p class="price">Mensual, anual con 7 días gratis o pago único para siempre</p>
+        <ul class="ticks">
+          <li>Pluses y salario con plantillas</li>
+          <li>Saldo de horas</li>
+          <li>Cambios de turno: quién debe a quién</li>
+          <li>Más personas</li>
+          <li>Importar el cuadrante desde una foto</li>
+          <li>Exportar a PDF, calendario y hoja de cálculo</li>
+          <li>Avisos de descanso entre jornadas</li>
+          <li>Widgets de mes y de pluses</li>
+        </ul>
+        <p class="note">El precio depende de tu país y lo verás en la tienda antes de pagar. Las suscripciones se gestionan y se cancelan desde tu cuenta de Apple o Google Play.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt cta">
+  <div class="wrap">
+    <img src="img/icon-256.png" alt="" width="96" height="96" loading="lazy">
+    <h2>Deja de hacer cuentas a mano</h2>
+    <p class="sub" style="margin: 0 auto">Monta tu cuadrante hoy. Tardas menos que en leer esta página.</p>
+    <div class="stores">
+      <a class="store" href="https://apps.apple.com/app/id6819271997" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.5v7m0 0l-3-3m3 3l3-3M8.5 17h7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span><small>Descargar en el</small><b>App Store</b></span>
+      </a>
+      <a class="store" href="https://play.google.com/store/apps/details?id=com.dprados.turnada" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8v16.4a.8.8 0 0 0 1.2.7l13.6-8.2a.8.8 0 0 0 0-1.4L7.2 3.1A.8.8 0 0 0 6 3.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <span><small>Disponible en</small><b>Google Play</b></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 Diego Prados · <a href="https://dprados.github.io/">Más apps</a></div>
+    <nav aria-label="Enlaces">
+      <a href="support.html">Ayuda</a>
+      <a href="privacy.html">Privacidad</a>
+      <a href="mailto:dpappssupport@gmail.com">dpappssupport@gmail.com</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
