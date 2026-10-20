@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pleno – Official fuel prices for Spain, France and Italy</title>
+<meta name="description" content="Pleno shows official fuel prices for every station in Spain, France and Italy and tells you which one is really worth it. On iPhone, in widgets and in CarPlay.">
+<meta name="theme-color" content="#0E3B43">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://dprados.github.io/pleno/">
+<link rel="alternate" hreflang="en" href="https://dprados.github.io/pleno/?lang=en">
+<link rel="alternate" hreflang="es" href="https://dprados.github.io/pleno/?lang=es">
+<link rel="alternate" hreflang="fr" href="https://dprados.github.io/pleno/?lang=fr">
+<link rel="alternate" hreflang="it" href="https://dprados.github.io/pleno/?lang=it">
+<link rel="alternate" hreflang="x-default" href="https://dprados.github.io/pleno/">
+<link rel="icon" type="image/png" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta name="apple-itunes-app" content="app-id=6822757502">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pleno">
+<meta property="og:title" content="Pleno – Fuel prices for Spain, France and Italy">
+<meta property="og:description" content="Pay less every time you fill up. Official prices, the best choice near you, widgets and CarPlay. No account, no ads, no tracking.">
+<meta property="og:url" content="https://dprados.github.io/pleno/">
+<meta property="og:image" content="https://dprados.github.io/pleno/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Pleno app icon with a fuel price of 1,57⁹ and the tagline Pay less every time you fill up">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pleno – Fuel prices for Spain, France and Italy">
+<meta name="twitter:description" content="Pay less every time you fill up. Official prices, the best choice near you, widgets and CarPlay.">
+<meta name="twitter:image" content="https://dprados.github.io/pleno/og.png">
+<style>
+:root{
+  --petrol:#0E3B43; --petrol-2:#0A2C33; --petrol-3:#145059; --teal:#7FC8C9;
+  --amber:#F2A33A; --cheap:#23875A; --avg:#A9861A; --exp:#C2452F;
+  --bg:#F7F5F0; --surface:#FFFFFF; --surface-2:#EEF2F1; --text:#12262A; --muted:#536669;
+  --line:rgba(14,59,67,.12); --kicker:#0E5C68; --amber-text:#9A5B00;
+  --cheap-text:#1C6F4A; --avg-text:#8A6C10; --exp-text:#B23B26;
+  --shadow:0 1px 2px rgba(14,59,67,.06),0 12px 32px rgba(14,59,67,.08);
+  --r:20px;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --round:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0A1E22; --surface:#10292F; --surface-2:#143239; --text:#E9EEEE; --muted:#A3B5B7;
+    --line:rgba(233,238,238,.10); --kicker:#7FC8C9; --amber-text:#F2B661;
+    --cheap-text:#5CC08F; --avg-text:#D9B54A; --exp-text:#EE7B63;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px rgba(0,0,0,.35);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.55 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.12}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--amber);color:#12262A;padding:8px 14px;border-radius:10px;z-index:100}
+.skip:focus{left:12px}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:6px}
+
+/* Pump-sign price: tabular rounded digits, third decimal small and raised */
+.price{font-family:var(--round);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em;white-space:nowrap;line-height:1}
+.price sup{font-size:.56em;vertical-align:0;position:relative;top:-.62em;margin-left:.04em}
+
+/* ---------- Top bar ---------- */
+.top{position:sticky;top:0;z-index:50;background:rgba(14,59,67,.86);backdrop-filter:saturate(160%) blur(16px);-webkit-backdrop-filter:saturate(160%) blur(16px);color:#fff;border-bottom:1px solid rgba(255,255,255,.08)}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:60px}
+.brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:19px;letter-spacing:-.01em;margin-right:auto}
+.brand img{width:30px;height:30px;border-radius:8px}
+.nav{display:none;gap:22px;font-size:15px}
+.nav a{text-decoration:none;color:rgba(255,255,255,.82)}
+.nav a:hover{color:#fff}
+.lang{display:flex;gap:2px;background:rgba(255,255,255,.08);border-radius:10px;padding:3px}
+.lang button{font:600 13px/1 var(--sans);color:rgba(255,255,255,.8);background:none;border:0;padding:7px 8px;border-radius:7px;cursor:pointer;min-width:34px}
+.lang button[aria-pressed="true"]{background:var(--amber);color:#12262A}
+.get{display:none;text-decoration:none;font-weight:600;font-size:14px;background:#fff;color:var(--petrol);padding:8px 14px;border-radius:999px}
+@media (min-width:860px){.nav{display:flex}.get{display:inline-block}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;color:#fff;overflow:hidden;
+  background:
+   radial-gradient(900px 520px at 85% 10%,rgba(127,200,201,.20),transparent 60%),
+   radial-gradient(700px 500px at 0% 100%,rgba(242,163,58,.10),transparent 60%),
+   linear-gradient(180deg,var(--petrol) 0%,var(--petrol-2) 100%)}
+.hero::before{content:"";position:absolute;inset:0;opacity:.18;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600' fill='none' stroke='%237FC8C9' stroke-width='1'%3E%3Cpath d='M-20 120C80 60 180 180 300 120S520 40 620 110'/%3E%3Cpath d='M-20 200C90 140 190 260 310 200S520 120 620 190'/%3E%3Cpath d='M-20 280C100 220 200 340 320 280S530 200 620 270'/%3E%3Cpath d='M-20 360C110 300 210 420 330 360S540 280 620 350'/%3E%3Cpath d='M-20 440C120 380 220 500 340 440S550 360 620 430'/%3E%3Cpath d='M-20 520C130 460 230 580 350 520S560 440 620 510'/%3E%3C/svg%3E");
+  background-size:600px 600px;-webkit-mask-image:linear-gradient(180deg,#000,transparent 90%);mask-image:linear-gradient(180deg,#000,transparent 90%)}
+.hero .wrap{position:relative;display:grid;gap:48px;padding-top:48px;padding-bottom:64px}
+.hero-icon{width:76px;height:76px;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.08)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;margin:22px 0 14px;font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--amber)}
+.hero h1{font-size:clamp(40px,7.4vw,68px);font-weight:700;letter-spacing:-.035em;line-height:1.02}
+.hero h1 .name{display:block;font-size:.5em;letter-spacing:-.01em;color:rgba(255,255,255,.7);font-weight:600;margin-bottom:10px}
+.hero .sub{margin-top:18px;font-size:clamp(17px,2vw,20px);line-height:1.5;color:rgba(255,255,255,.82);max-width:34em}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;margin-top:30px}
+.badge{display:inline-flex;align-items:center;gap:10px;background:#000;color:#fff;text-decoration:none;border-radius:12px;padding:9px 18px 9px 14px;border:1px solid rgba(255,255,255,.35);min-height:54px;transition:transform .2s ease,box-shadow .2s ease}
+.badge:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.badge svg{width:26px;height:30px;flex:none}
+.badge span{display:flex;flex-direction:column;line-height:1.05}
+.badge small{font-size:11.5px;font-weight:500;letter-spacing:.01em}
+.badge strong{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.cta-note{font-size:14px;color:rgba(255,255,255,.72)}
+.flags{display:flex;gap:8px;margin-top:26px;flex-wrap:wrap}
+.flags span{font-size:13px;font-weight:600;color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:5px 11px}
+
+.stage{position:relative;justify-self:center;width:min(310px,74vw);margin:0 auto}
+.phone{position:relative;aspect-ratio:1206/2622;border-radius:52px;padding:11px;background:linear-gradient(145deg,#2a3436,#0b1012 40%,#1d2628);box-shadow:0 40px 80px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.08) inset}
+.phone img{width:100%;height:100%;object-fit:cover;border-radius:42px;background:#dfe7e3}
+.phone::after{content:"";position:absolute;top:22px;left:50%;transform:translateX(-50%);width:30%;height:26px;border-radius:20px;background:#000}
+.pill{position:absolute;display:inline-flex;align-items:center;color:#fff;font-size:22px;padding:8px 13px 7px;border-radius:999px;box-shadow:0 10px 24px rgba(0,0,0,.28),0 0 0 2px rgba(255,255,255,.9);animation:float 6s ease-in-out infinite}
+.pill.cheap{background:var(--cheap)} .pill.avg{background:var(--avg)} .pill.exp{background:var(--exp)}
+.pill.p1{left:-34px;top:16%;animation-delay:-1s}
+.pill.p2{right:-30px;top:30%;animation-delay:-3s}
+.pill.p3{left:-18px;top:46%;animation-delay:-2s;font-size:19px}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.sign{position:absolute;right:-26px;bottom:7%;width:178px;border-radius:18px;padding:0 0 10px;background:linear-gradient(180deg,#0b1416,#060b0c);box-shadow:0 26px 50px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.1) inset;overflow:hidden;color:#fff}
+.sign-top{background:var(--amber);color:#12262A;font-size:11.5px;font-weight:700;letter-spacing:.02em;padding:7px 12px;text-align:center}
+.sign-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:8px 14px 2px;font-size:13px;font-weight:600;color:rgba(255,255,255,.72)}
+.sign-row .price{font-size:30px;color:#FFC56B;text-shadow:0 0 14px rgba(242,163,58,.45)}
+.sign-row+.sign-row{border-top:1px solid rgba(255,255,255,.07)}
+.sign-row:nth-child(2) .price{color:#6FE0A8;text-shadow:0 0 14px rgba(35,135,90,.6)}
+.sign-save{margin:8px 12px 0;text-align:center;font-size:12.5px;font-weight:700;color:#6FE0A8;background:rgba(35,135,90,.18);border-radius:999px;padding:4px 8px}
+@media (min-width:900px){
+  .hero .wrap{grid-template-columns:1.1fr .9fr;align-items:center;padding-top:72px;padding-bottom:88px}
+  .stage{width:320px}
+  .pill.p1{left:-70px}.pill.p3{left:-50px}.pill.p2{right:-56px}.sign{right:-96px}
+}
+@media (max-width:420px){
+  .pill{font-size:18px}.pill.p3{font-size:16px}
+  .pill.p1{left:-14px}.pill.p3{left:-8px}.pill.p2{right:-12px}
+  .sign{right:-10px;width:150px}.sign-row .price{font-size:25px}
+}
+
+/* ---------- Sections ---------- */
+section{padding:84px 0}
+.kicker{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--kicker);margin-bottom:12px}
+.h2{font-size:clamp(30px,4.4vw,46px);font-weight:700;letter-spacing:-.03em}
+.lead{margin-top:14px;font-size:clamp(17px,1.8vw,19px);color:var(--muted);max-width:38em}
+.grid3{display:grid;gap:18px;margin-top:40px}
+@media (min-width:820px){.grid3{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--shadow)}
+.card h3{font-size:20px;margin-top:20px}
+.card p{margin-top:8px;color:var(--muted);font-size:16px}
+.demo{height:150px;border-radius:14px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;padding:14px;position:relative;overflow:hidden}
+
+/* demo 1: best choice */
+.mini-best{width:100%;max-width:250px;background:var(--surface);border:2px solid var(--amber);border-radius:14px;padding:11px 13px}
+.mini-best .l{font-size:12px;font-weight:600;color:var(--amber-text)}
+.mini-best .r{display:flex;justify-content:space-between;align-items:flex-end;margin-top:4px}
+.mini-best .price{font-size:34px}
+.mini-best .s{font-size:14px;font-weight:700;color:var(--cheap-text);text-align:right}
+.mini-best .s small{display:block;font-size:10.5px;color:var(--muted);font-weight:500}
+/* demo 2: full tank */
+.tank{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.tank .eq{font-family:var(--round);font-variant-numeric:tabular-nums;font-size:15px;color:var(--muted)}
+.tank .tot{font-family:var(--round);font-weight:700;font-size:40px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.tank .gauge{width:160px;height:8px;border-radius:8px;background:linear-gradient(90deg,var(--amber) 0 92%,var(--line) 92%)}
+/* demo 3: tiers */
+.tiers{display:flex;gap:10px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.tier{display:flex;flex-direction:column;align-items:center;gap:7px}
+.tier .chip{color:#fff;font-size:20px;padding:7px 11px 6px;border-radius:999px}
+.tier .chip.cheap{background:var(--cheap)}.tier .chip.avg{background:var(--avg)}.tier .chip.exp{background:var(--exp)}
+.tier small{font-size:12.5px;font-weight:600}
+.tier small.c{color:var(--cheap-text)}.tier small.a{color:var(--avg-text)}.tier small.e{color:var(--exp-text)}
+.fresh{display:flex;align-items:center;gap:10px;margin-top:22px;color:var(--muted);font-size:15px}
+.fresh .live{width:8px;height:8px;border-radius:50%;background:var(--cheap);box-shadow:0 0 0 4px rgba(35,135,90,.18);flex:none}
+
+/* ---------- Screenshots ---------- */
+.shots{background:linear-gradient(180deg,var(--bg),var(--surface-2))}
+.rail{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:36px 20px 22px;margin:0 -20px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.rail figure{margin:0;flex:0 0 auto;width:min(62vw,250px);scroll-snap-align:center}
+.rail img{width:100%;height:auto;aspect-ratio:1320/2868;object-fit:cover;border-radius:26px;box-shadow:var(--shadow);background:var(--surface)}
+.rail figcaption{margin-top:12px;font-size:14px;font-weight:600;color:var(--muted);text-align:center}
+@media (min-width:1000px){.rail{justify-content:safe center}.rail figure{width:200px}}
+
+/* ---------- CarPlay ---------- */
+.split{display:grid;gap:44px;align-items:center}
+@media (min-width:900px){.split{grid-template-columns:1fr 1.1fr}.split.rev>:first-child{order:2}}
+.ticks{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:12px}
+.ticks li{display:flex;gap:12px;align-items:flex-start}
+.ticks svg{flex:none;width:22px;height:22px;margin-top:2px;color:var(--kicker)}
+.carplay{position:relative;aspect-ratio:16/8.4;border-radius:26px;background:#05090a;padding:12px;box-shadow:0 30px 60px rgba(0,0,0,.28),0 0 0 1px rgba(255,255,255,.06) inset}
+.cp{display:grid;grid-template-columns:42px 1fr 1fr;gap:10px;height:100%;color:#fff;font-size:12px}
+.cp-dock{display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:6px 0;background:#121a1c;border-radius:14px}
+.cp-dock i{display:block;width:24px;height:24px;border-radius:7px;background:#2b3638}
+.cp-dock i.on{background:url(img/icon-192.webp) center/cover}
+.cp-dock b{font-size:10px;font-weight:600;color:#cfd8d9}
+.cp-map{position:relative;border-radius:14px;overflow:hidden;background:
+  linear-gradient(115deg,transparent 46%,#3b4a4d 46.5%,#3b4a4d 48.5%,transparent 49%),
+  linear-gradient(20deg,transparent 60%,#2f3c3f 60.4%,#2f3c3f 61.6%,transparent 62%),
+  radial-gradient(circle at 30% 70%,#203033,transparent 40%),#182427}
+.cp-map .pill{position:absolute;font-size:13px;padding:4px 8px 3px;animation:none;box-shadow:0 0 0 1.5px #fff}
+.cp-map .me{position:absolute;left:43%;top:62%;width:16px;height:16px;border-radius:50%;background:#3b8cff;box-shadow:0 0 0 4px rgba(59,140,255,.3),0 0 0 2px #fff inset}
+.cp-list{background:#121a1c;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;overflow:hidden}
+.cp-tabs{display:flex;gap:6px;margin-bottom:6px}
+.cp-tabs span{font-size:10.5px;font-weight:600;padding:4px 8px;border-radius:999px;background:#253033;color:#cfd8d9;white-space:nowrap}
+.cp-tabs span.on{background:#fff;color:#0b1012}
+.cp-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;border-top:1px solid #222d30}
+.cp-row:first-of-type{border-top:0}
+.cp-row div{min-width:0}
+.cp-row strong{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cp-row em{font-style:normal;font-size:10.5px;color:#9fb0b2}
+.cp-row .price{font-size:17px}
+.cp-row .price.c{color:#5CC08F}.cp-row .price.a{color:#E2BF55}
+.widget{position:absolute;right:-14px;bottom:-46px;width:138px;aspect-ratio:1;border-radius:26px;background:linear-gradient(160deg,#134a53,#0E3B43);color:#fff;padding:14px;box-shadow:0 20px 40px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.1) inset;display:flex;flex-direction:column}
+.widget .w-l{font-size:11px;font-weight:600;color:var(--teal);display:flex;gap:5px;align-items:center}
+.widget .price{font-size:32px;margin-top:auto}
+.widget .w-s{font-size:11.5px;color:rgba(255,255,255,.75);margin-top:4px}
+.widget .w-s b{color:var(--amber);font-weight:700}
+@media (max-width:560px){.cp{grid-template-columns:34px 1fr;}.cp-map{display:none}.widget{width:128px;bottom:-40px;right:-4px}.widget .price{font-size:30px}}
+
+/* ---------- My car ---------- */
+.car{display:grid;gap:14px;grid-template-columns:repeat(2,1fr)}
+.car .stat{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.car .stat span{display:block;font-size:13px;font-weight:600;color:var(--muted)}
+.car .stat strong{display:block;margin-top:6px;font-family:var(--round);font-variant-numeric:tabular-nums;font-size:clamp(26px,3.4vw,34px);letter-spacing:-.02em}
+.car .stat.in{background:var(--surface-2);box-shadow:none}
+.car .stat.in strong{font-size:22px;color:var(--muted)}
+.car .stat.hl{border:2px solid var(--amber)}
+
+/* ---------- Pro ---------- */
+.pro{background:linear-gradient(180deg,var(--petrol),var(--petrol-2));color:#fff;position:relative;overflow:hidden}
+.pro::after{content:"";position:absolute;width:700px;height:700px;right:-240px;top:-260px;border-radius:50%;background:radial-gradient(circle,rgba(242,163,58,.16),transparent 65%);pointer-events:none}
+.pro .kicker{color:var(--amber)}
+.pro .lead{color:rgba(255,255,255,.8)}
+.feat{display:grid;gap:14px;margin-top:40px}
+@media (min-width:760px){.feat{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1040px){.feat{grid-template-columns:repeat(4,1fr)}}
+.feat article{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:22px}
+.feat .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(242,163,58,.16);color:var(--amber)}
+.feat .ic svg{width:22px;height:22px}
+.feat h3{font-size:19px;margin-top:16px}
+.feat p{margin-top:6px;font-size:15.5px;color:rgba(255,255,255,.76)}
+.plans{display:grid;gap:16px;margin-top:40px;position:relative;z-index:1}
+@media (min-width:700px){.plans{grid-template-columns:1fr 1fr;max-width:760px}}
+.plan{position:relative;background:#fff;color:#12262A;border-radius:22px;padding:24px;border:2px solid transparent}
+.plan.year{border-color:var(--amber)}
+.plan .tag{position:absolute;top:-12px;left:22px;background:var(--amber);color:#12262A;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+.plan h3{font-size:18px}
+.plan .amt{font-family:var(--round);font-variant-numeric:tabular-nums;font-weight:700;font-size:40px;letter-spacing:-.02em;margin-top:8px}
+.plan .per{color:#536669;font-size:15px}
+.plan .trial{display:inline-block;margin-top:14px;font-size:14px;font-weight:600;color:#0E3B43;background:#E6F0EF;border-radius:999px;padding:5px 11px}
+.fine{margin-top:20px;font-size:13.5px;color:rgba(255,255,255,.7);max-width:46em;position:relative;z-index:1}
+
+/* ---------- Trust ---------- */
+.promises{display:grid;gap:14px;margin-top:40px}
+@media (min-width:700px){.promises{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1040px){.promises{grid-template-columns:repeat(4,1fr)}}
+.promise{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.promise svg{width:28px;height:28px;color:var(--kicker)}
+.promise h3{font-size:18px;margin-top:14px}
+.promise p{margin-top:6px;color:var(--muted);font-size:15.5px}
+.sources{margin-top:28px;background:var(--surface-2);border-radius:var(--r);padding:22px 24px}
+.sources h3{font-size:17px}
+.sources ul{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+@media (min-width:820px){.sources ul{grid-template-columns:repeat(3,1fr)}}
+.sources li{font-size:15px}
+.sources li b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--kicker)}
+.sources .note{margin-top:14px;font-size:13.5px;color:var(--muted)}
+.textlink{color:var(--kicker);font-weight:600;text-underline-offset:3px}
+
+/* ---------- Final CTA + footer ---------- */
+.final{text-align:center;padding:90px 0}
+.final img{width:88px;height:88px;border-radius:20px;margin:0 auto 22px;box-shadow:var(--shadow)}
+.final .lead{margin-left:auto;margin-right:auto}
+.final .cta-row{justify-content:center}
+.final .badge{border-color:#000}
+@media (prefers-color-scheme:dark){.final .badge{border-color:rgba(255,255,255,.35)}}
+footer{border-top:1px solid var(--line);padding:30px 0 40px;font-size:14.5px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center}
+footer nav{display:flex;flex-wrap:wrap;gap:10px 22px;margin-right:auto}
+footer a{color:var(--muted);text-underline-offset:3px}
+footer a:hover{color:var(--text)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Pleno"><img src="img/icon-192.webp" alt="" width="30" height="30">Pleno</a>
+    <nav class="nav" data-i18n-aria="a11y.nav" aria-label="Sections">
+      <a href="#how" data-i18n="nav.how">How it works</a>
+      <a href="#carplay" data-i18n="nav.carplay">CarPlay</a>
+      <a href="#pro" data-i18n="nav.pro">Pro</a>
+      <a href="#privacy" data-i18n="nav.privacy">Privacy</a>
+    </nav>
+    <div class="lang" role="group" data-i18n-aria="a11y.lang" aria-label="Language">
+      <button type="button" data-lang-btn="en" lang="en" aria-pressed="true" title="English">EN</button>
+      <button type="button" data-lang-btn="es" lang="es" aria-pressed="false" title="Español">ES</button>
+      <button type="button" data-lang-btn="fr" lang="fr" aria-pressed="false" title="Français">FR</button>
+      <button type="button" data-lang-btn="it" lang="it" aria-pressed="false" title="Italiano">IT</button>
+    </div>
+    <a class="get" href="https://apps.apple.com/app/id6822757502" data-i18n="nav.get">Get the app</a>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top" style="padding:0">
+  <div class="wrap">
+    <div>
+      <img class="hero-icon" src="img/icon-192.webp" alt="" width="76" height="76">
+      <p class="eyebrow"><span class="dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Official fuel prices · iPhone &amp; CarPlay</span></p>
+      <h1><span class="name">Pleno</span><span data-i18n="hero.title">Pay less every time you fill up.</span></h1>
+      <p class="sub" data-i18n="hero.sub">Official prices for every station in Spain, France and Italy. Pleno tells you which one is really worth it, detour included, on your iPhone, in widgets and in CarPlay.</p>
+      <div class="cta-row">
+        <a class="badge" href="https://apps.apple.com/app/id6822757502" data-i18n-aria="badge.aria" aria-label="Download Pleno on the App Store">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <span><small data-i18n="badge.small">Download on the</small><strong>App Store</strong></span>
+        </a>
+        <span class="cta-note" data-i18n="hero.note">Free · Pleno Pro optional</span>
+      </div>
+      <div class="flags" aria-label="Spain, France, Italy" data-i18n-aria="hero.countries">
+        <span data-i18n="c.es">Spain</span><span data-i18n="c.fr">France</span><span data-i18n="c.it">Italy</span>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="phone">
+        <img src="img/home-light.webp" data-shot="img/home-light.webp" width="720" height="1565" fetchpriority="high"
+             data-i18n-alt="hero.alt" alt="Pleno home screen: a map of Madrid with colour-coded fuel prices and the best choice near you">
+      </div>
+      <span class="pill exp p1" aria-hidden="true"><span class="price">1,74<sup>9</sup></span></span>
+      <span class="pill avg p2" aria-hidden="true"><span class="price">1,65<sup>9</sup></span></span>
+      <span class="pill cheap p3" aria-hidden="true"><span class="price">1,56<sup>9</sup></span></span>
+      <div class="sign" role="img" data-i18n-aria="sign.aria" aria-label="Pump-style price sign: diesel 1,57⁹, unleaded 95 1,63⁹, unleaded 98 1,74⁹ euros per litre">
+        <div class="sign-top" aria-hidden="true"><span data-i18n="best.label">Best choice near you</span></div>
+        <div class="sign-row" aria-hidden="true"><span data-i18n="sign.diesel">Diesel</span><span class="price">1,57<sup>9</sup></span></div>
+        <div class="sign-row" aria-hidden="true"><span>95</span><span class="price">1,63<sup>9</sup></span></div>
+        <div class="sign-row" aria-hidden="true"><span>98</span><span class="price">1,74<sup>9</sup></span></div>
+        <div class="sign-save" aria-hidden="true" data-i18n="best.save">Save 2,67 €</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <p class="kicker" data-i18n="how.kicker">How it works</p>
+    <h2 class="h2" data-i18n="how.title">The best price, at a glance</h2>
+    <p class="lead" data-i18n="how.sub">Pleno compares every station around you with the local average and works out what you really save, for your car.</p>
+    <div class="grid3">
+      <article class="card">
+        <div class="demo" aria-hidden="true">
+          <div class="mini-best">
+            <div class="l" data-i18n="best.label">Best choice near you</div>
+            <div class="r"><span class="price">1,57<sup>9</sup></span><span class="s"><span data-i18n="best.save">Save 2,67 €</span><small data-i18n="demo.detour">detour included</small></span></div>
+          </div>
+        </div>
+        <h3 data-i18n="how.1.t">The best choice, not just the cheapest</h3>
+        <p data-i18n="how.1.d">Pleno weighs the price against the detour and tells you how much you save on a full tank.</p>
+      </article>
+      <article class="card">
+        <div class="demo" aria-hidden="true">
+          <div class="tank">
+            <span class="eq">50 L × 1,579 €/L</span>
+            <span class="tot">78,95 €</span>
+            <span class="gauge"></span>
+          </div>
+        </div>
+        <h3 data-i18n="how.2.t">Your full-tank price</h3>
+        <p data-i18n="how.2.d">Every station shows what filling up costs for your car, not just the price per litre.</p>
+      </article>
+      <article class="card">
+        <div class="demo" aria-hidden="true">
+          <div class="tiers">
+            <div class="tier"><span class="chip cheap price">1,51<sup>9</sup></span><small class="c">−6 cts</small></div>
+            <div class="tier"><span class="chip avg price">1,57<sup>9</sup></span><small class="a" data-i18n="demo.avg">average</small></div>
+            <div class="tier"><span class="chip exp price">1,61<sup>9</sup></span><small class="e">+4 cts</small></div>
+          </div>
+        </div>
+        <h3 data-i18n="how.3.t">Colours that mean something</h3>
+        <p data-i18n="how.3.d">Prices on the map turn green, amber or red against the local average, always with the difference in cents.</p>
+      </article>
+    </div>
+    <p class="fresh"><span class="live" aria-hidden="true"></span><span data-i18n="how.fresh">Prices published by each country's authorities, always with how recent they are.</span></p>
+  </div>
+</section>
+
+<section class="shots" id="screens" aria-labelledby="shots-title">
+  <div class="wrap">
+    <p class="kicker" data-i18n="shots.kicker">Screenshots</p>
+    <h2 class="h2" id="shots-title" data-i18n="shots.title">Calm, clear and precise</h2>
+    <div class="rail" id="rail" tabindex="0" data-i18n-aria="shots.aria" aria-label="App screenshots">
+      <figure><img loading="lazy" decoding="async" width="720" height="1565" src="img/home-light.webp" data-shot="img/home-light.webp" data-i18n-alt="shot.1" alt="The best price, at a glance"><figcaption data-i18n="shot.1">The best price, at a glance</figcaption></figure>
+      <figure><img loading="lazy" decoding="async" width="720" height="1565" src="img/home-dark.webp" data-shot="img/home-dark.webp" data-i18n-alt="shot.2" alt="Your full tank, for less"><figcaption data-i18n="shot.2">Your full tank, for less</figcaption></figure>
+      <figure><img loading="lazy" decoding="async" width="720" height="1565" src="img/paywall.webp" data-shot="img/paywall.webp" data-i18n-alt="shot.6" alt="Pleno Pro"><figcaption data-i18n="shot.6">Pleno Pro</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="carplay">
+  <div class="wrap split">
+    <div>
+      <p class="kicker" data-i18n="cp.kicker">CarPlay &amp; widgets</p>
+      <h2 class="h2" data-i18n="cp.title">Right on your car's screen</h2>
+      <p class="lead" data-i18n="cp.sub">The best stations ahead of you, skipping those you've already passed. One tap and you're on your way.</p>
+      <ul class="ticks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="cp.l1">Stations ahead of you, ranked by what you save</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="cp.l2">Directions in Apple Maps, Google Maps or Waze</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="cp.l3">A CarPlay dashboard widget with the cheapest station nearby</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="cp.l4">Home Screen widgets on your iPhone</span></li>
+      </ul>
+    </div>
+    <div style="position:relative;padding-bottom:30px">
+      <div class="carplay" role="img" data-i18n-aria="cp.alt" aria-label="Illustration of Pleno in CarPlay: a map with prices and a list of the best stations ahead, plus a widget with the cheapest station nearby">
+        <div class="cp" aria-hidden="true">
+          <div class="cp-dock"><b>9:41</b><i class="on"></i><i></i><i></i><b>5G</b></div>
+          <div class="cp-map">
+            <span class="pill cheap" style="left:16%;top:22%"><span class="price">1,56<sup>9</sup></span></span>
+            <span class="pill avg" style="left:56%;top:12%"><span class="price">1,63<sup>9</sup></span></span>
+            <span class="pill exp" style="left:62%;top:44%"><span class="price">1,74<sup>9</sup></span></span>
+            <span class="pill cheap" style="left:12%;top:72%;box-shadow:0 0 0 2px var(--amber)"><span class="price">1,55<sup>9</sup></span></span>
+            <span class="me"></span>
+          </div>
+          <div class="cp-list">
+            <div class="cp-tabs"><span class="on" data-i18n="cp.tab1">Best now</span><span data-i18n="cp.tab2">Trip</span><span data-i18n="cp.tab3">Favourites</span></div>
+            <div class="cp-row"><div><strong>Av. de Andalucía</strong><em data-i18n="cp.r1">2,1 km · ahead</em></div><span class="price c">1,55<sup>9</sup></span></div>
+            <div class="cp-row"><div><strong>Calle de Toledo</strong><em data-i18n="cp.r2">3,4 km · ahead</em></div><span class="price c">1,56<sup>9</sup></span></div>
+            <div class="cp-row"><div><strong>Paseo de Extremadura</strong><em data-i18n="cp.r3">5,0 km · ahead</em></div><span class="price a">1,62<sup>9</sup></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="widget" aria-hidden="true">
+        <span class="w-l"><span data-i18n="w.title">Cheapest nearby</span></span>
+        <span class="price">1,55<sup>9</sup></span>
+        <span class="w-s">Av. de Andalucía · <b>−6 cts</b></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="car" style="background:var(--surface-2)">
+  <div class="wrap split rev">
+    <div>
+      <p class="kicker" data-i18n="car.kicker">My car</p>
+      <h2 class="h2" data-i18n="car.title">What your car really costs</h2>
+      <p class="lead" data-i18n="car.sub">Tell Pleno your tank and consumption to see what a full tank costs, how far it takes you and what you spend each month.</p>
+    </div>
+    <div class="car">
+      <div class="stat in"><span data-i18n="car.tank">Tank</span><strong>50 L</strong></div>
+      <div class="stat in"><span data-i18n="car.use">Consumption</span><strong>6,0 L/100 km</strong></div>
+      <div class="stat hl"><span data-i18n="car.full">Full tank</span><strong>78,95 €</strong></div>
+      <div class="stat"><span data-i18n="car.range">Range</span><strong>833 km</strong></div>
+      <div class="stat" style="grid-column:1/-1"><span data-i18n="car.month">Per month (1,200 km)</span><strong>113,69 €</strong></div>
+    </div>
+  </div>
+</section>
+
+<section class="pro" id="pro">
+  <div class="wrap" style="position:relative;z-index:1">
+    <p class="kicker" data-i18n="pro.kicker">Pleno Pro</p>
+    <h2 class="h2" data-i18n="pro.title">Never overpay for fuel again</h2>
+    <p class="lead" data-i18n="pro.sub">Pleno Pro tells you when and where to fill up, on your iPhone and in CarPlay.</p>
+    <div class="feat">
+      <article>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h8.5a3.5 3.5 0 0 0 0-7h-9a3.5 3.5 0 0 1 0-7H16"/></svg></div>
+        <h3 data-i18n="pro.f1.t">Trips</h3>
+        <p data-i18n="pro.f1.d">Enter your destination and Pleno plans where to stop so you never run low and pay less. Also in CarPlay.</p>
+      </article>
+      <article>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div>
+        <h3 data-i18n="pro.f2.t">Price alerts</h3>
+        <p data-i18n="pro.f2.d">Know when your favourite stations lower their prices.</p>
+      </article>
+      <article>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></div>
+        <h3 data-i18n="pro.f3.t">Cheapest day</h3>
+        <p data-i18n="pro.f3.d">The day of the week when fuel is usually cheapest.</p>
+      </article>
+      <article>
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+        <h3 data-i18n="pro.f4.t">More widgets</h3>
+        <p data-i18n="pro.f4.d">Top 3 nearby, favourites and Lock Screen.</p>
+      </article>
+    </div>
+    <div class="plans">
+      <div class="plan year">
+        <span class="tag" data-i18n="plan.best">Best value</span>
+        <h3 data-i18n="plan.year">Yearly</h3>
+        <div class="amt">5,99 €</div>
+        <div class="per" data-i18n="plan.year.per">per year · 0,50 € a month</div>
+        <span class="trial" data-i18n="plan.trial">7-day free trial</span>
+      </div>
+      <div class="plan">
+        <h3 data-i18n="plan.life">Lifetime</h3>
+        <div class="amt">14,99 €</div>
+        <div class="per" data-i18n="plan.life.per">One payment, Pro forever</div>
+      </div>
+    </div>
+    <p class="fine" data-i18n="pro.fine">The subscription renews automatically unless cancelled at least 24 hours before the end of the current period. You can manage or cancel it in your Apple account settings. Prices shown in euros; they may vary by country.</p>
+  </div>
+</section>
+
+<section id="privacy">
+  <div class="wrap">
+    <p class="kicker" data-i18n="tr.kicker">Privacy &amp; data</p>
+    <h2 class="h2" data-i18n="tr.title">No account. No ads. No tracking.</h2>
+    <p class="lead" data-i18n="tr.sub">Your location stays on your iPhone. To fetch prices, Pleno only asks the public sources for the area you're looking at.</p>
+    <div class="promises">
+      <div class="promise">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/><path d="M3 3l18 18"/></svg>
+        <h3 data-i18n="tr.1.t">No account</h3><p data-i18n="tr.1.d">Open the app and go. Nothing to sign up for, nothing to remember.</p>
+      </div>
+      <div class="promise">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 3l18 18"/></svg>
+        <h3 data-i18n="tr.2.t">No ads</h3><p data-i18n="tr.2.d">Just prices. No banners, no sponsored stations.</p>
+      </div>
+      <div class="promise">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path d="M3 3l18 18"/></svg>
+        <h3 data-i18n="tr.3.t">No tracking</h3><p data-i18n="tr.3.d">No analytics SDKs, no third-party trackers, no personal data on any server.</p>
+      </div>
+      <div class="promise">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        <h3 data-i18n="tr.4.t">Location stays on device</h3><p data-i18n="tr.4.d">Only the search area is sent to the official price services, never linked to you.</p>
+      </div>
+    </div>
+    <div class="sources">
+      <h3 data-i18n="src.title">Official data sources</h3>
+      <ul>
+        <li><b data-i18n="c.es">Spain</b><span data-i18n="src.es">Ministry for the Ecological Transition (MITECO)</span></li>
+        <li><b data-i18n="c.fr">France</b><span data-i18n="src.fr">prix-carburants, Ministry of the Economy · Licence Ouverte 2.0</span></li>
+        <li><b data-i18n="c.it">Italy</b><span data-i18n="src.it">MIMIT, Osservaprezzi carburanti · IODL 2.0</span></li>
+      </ul>
+      <p class="note"><span data-i18n="src.note">Pleno is not affiliated with or endorsed by any of these administrations.</span> <a class="textlink" href="privacy.html" data-keep-lang="privacy.html" data-i18n="src.link">Read the privacy policy</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <img src="img/icon-192.webp" alt="" width="88" height="88" loading="lazy">
+    <h2 class="h2" data-i18n="final.title">Fill up for less, starting today.</h2>
+    <p class="lead" data-i18n="final.sub">Free to download. In English, Spanish, French, Italian, Catalan, Basque and Galician.</p>
+    <div class="cta-row">
+      <a class="badge" href="https://apps.apple.com/app/id6822757502" data-i18n-aria="badge.aria" aria-label="Download Pleno on the App Store">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <span><small data-i18n="badge.small">Download on the</small><strong>App Store</strong></span>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <nav data-i18n-aria="a11y.footer" aria-label="Footer">
+      <a href="support.html" data-keep-lang="support.html" data-i18n="f.support">Support</a>
+      <a href="privacy.html" data-keep-lang="privacy.html" data-i18n="f.privacy">Privacy Policy</a>
+      <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" data-i18n="f.terms">Terms of Use</a>
+      <a href="mailto:dpappssupport@gmail.com">dpappssupport@gmail.com</a>
+    </nav>
+    <span>© 2026 Diego Prados</span>
+  </div>
+</footer>
+
+<noscript><style>.lang{display:none}</style></noscript>
+
+<script>
+window.PLENO_STRINGS = {
+en: {
+  "sign.diesel": "Diesel", "sign.aria": "Pump-style price sign: diesel 1,57⁹, unleaded 95 1,63⁹, unleaded 98 1,74⁹ euros per litre",
+  "meta.title": "Pleno – Official fuel prices for Spain, France and Italy",
+  "meta.desc": "Pleno shows official fuel prices for every station in Spain, France and Italy and tells you which one is really worth it. On iPhone, in widgets and in CarPlay.",
+  "a11y.skip": "Skip to content", "a11y.nav": "Sections", "a11y.lang": "Language", "a11y.footer": "Footer",
+  "nav.how": "How it works", "nav.carplay": "CarPlay", "nav.pro": "Pro", "nav.privacy": "Privacy", "nav.get": "Get the app",
+  "hero.eyebrow": "Official fuel prices · iPhone & CarPlay",
+  "hero.title": "Pay less every time you fill up.",
+  "hero.sub": "Official prices for every station in Spain, France and Italy. Pleno tells you which one is really worth it, detour included, on your iPhone, in widgets and in CarPlay.",
+  "hero.note": "Free · Pleno Pro optional",
+  "hero.countries": "Spain, France, Italy",
+  "hero.alt": "Pleno home screen: a map of Madrid with colour-coded fuel prices and the best choice near you",
+  "badge.small": "Download on the", "badge.aria": "Download Pleno on the App Store",
+  "c.es": "Spain", "c.fr": "France", "c.it": "Italy",
+  "best.label": "Best choice near you", "best.save": "Save 2,67 €", "best.per": "per fill-up, detour included",
+  "demo.detour": "detour included", "demo.avg": "average",
+  "how.kicker": "How it works",
+  "how.title": "The best price, at a glance",
+  "how.sub": "Pleno compares every station around you with the local average and works out what you really save, for your car.",
+  "how.1.t": "The best choice, not just the cheapest",
+  "how.1.d": "Pleno weighs the price against the detour and tells you how much you save on a full tank.",
+  "how.2.t": "Your full-tank price",
+  "how.2.d": "Every station shows what filling up costs for your car, not just the price per litre.",
+  "how.3.t": "Colours that mean something",
+  "how.3.d": "Prices on the map turn green, amber or red against the local average, always with the difference in cents.",
+  "how.fresh": "Prices published by each country's authorities, always with how recent they are.",
+  "shots.kicker": "Screenshots", "shots.title": "Calm, clear and precise", "shots.aria": "App screenshots",
+  "shot.1": "The best price, at a glance", "shot.2": "Your full tank, for less", "shot.3": "Plan where to fill up",
+  "shot.4": "In CarPlay too", "shot.5": "What your car costs", "shot.6": "Pleno Pro",
+  "cp.kicker": "CarPlay & widgets",
+  "cp.title": "Right on your car's screen",
+  "cp.sub": "The best stations ahead of you, skipping those you've already passed. One tap and you're on your way.",
+  "cp.l1": "Stations ahead of you, ranked by what you save",
+  "cp.l2": "Directions in Apple Maps, Google Maps or Waze",
+  "cp.l3": "A CarPlay dashboard widget with the cheapest station nearby",
+  "cp.l4": "Home Screen widgets on your iPhone",
+  "cp.alt": "Illustration of Pleno in CarPlay: a map with prices and a list of the best stations ahead, plus a widget with the cheapest station nearby",
+  "cp.tab1": "Best now", "cp.tab2": "Trip", "cp.tab3": "Favourites",
+  "cp.r1": "2,1 km · ahead", "cp.r2": "3,4 km · ahead", "cp.r3": "5,0 km · ahead",
+  "w.title": "Cheapest nearby",
+  "car.kicker": "My car",
+  "car.title": "What your car really costs",
+  "car.sub": "Tell Pleno your tank and consumption to see what a full tank costs, how far it takes you and what you spend each month.",
+  "car.tank": "Tank", "car.use": "Consumption", "car.full": "Full tank", "car.range": "Range", "car.month": "Per month (1,200 km)",
+  "pro.kicker": "Pleno Pro",
+  "pro.title": "Never overpay for fuel again",
+  "pro.sub": "Pleno Pro tells you when and where to fill up, on your iPhone and in CarPlay.",
+  "pro.f1.t": "Trips", "pro.f1.d": "Enter your destination and Pleno plans where to stop so you never run low and pay less. Also in CarPlay.",
+  "pro.f2.t": "Price alerts", "pro.f2.d": "Know when your favourite stations lower their prices.",
+  "pro.f3.t": "Cheapest day", "pro.f3.d": "The day of the week when fuel is usually cheapest.",
+  "pro.f4.t": "More widgets", "pro.f4.d": "Top 3 nearby, favourites and Lock Screen.",
+  "plan.best": "Best value", "plan.year": "Yearly", "plan.year.per": "per year · 0,50 € a month", "plan.trial": "7-day free trial",
+  "plan.life": "Lifetime", "plan.life.per": "One payment, Pro forever",
+  "pro.fine": "The subscription renews automatically unless cancelled at least 24 hours before the end of the current period. You can manage or cancel it in your Apple account settings. Prices shown in euros; they may vary by country.",
+  "tr.kicker": "Privacy & data",
+  "tr.title": "No account. No ads. No tracking.",
+  "tr.sub": "Your location stays on your iPhone. To fetch prices, Pleno only asks the public sources for the area you're looking at.",
+  "tr.1.t": "No account", "tr.1.d": "Open the app and go. Nothing to sign up for, nothing to remember.",
+  "tr.2.t": "No ads", "tr.2.d": "Just prices. No banners, no sponsored stations.",
+  "tr.3.t": "No tracking", "tr.3.d": "No analytics SDKs, no third-party trackers, no personal data on any server.",
+  "tr.4.t": "Location stays on device", "tr.4.d": "Only the search area is sent to the official price services, never linked to you.",
+  "src.title": "Official data sources",
+  "src.es": "Ministry for the Ecological Transition (MITECO)",
+  "src.fr": "prix-carburants, Ministry of the Economy · Licence Ouverte 2.0",
+  "src.it": "MIMIT, Osservaprezzi carburanti · IODL 2.0",
+  "src.note": "Pleno is not affiliated with or endorsed by any of these administrations.",
+  "src.link": "Read the privacy policy",
+  "final.title": "Fill up for less, starting today.",
+  "final.sub": "Free to download. In English, Spanish, French, Italian, Catalan, Basque and Galician.",
+  "f.support": "Support", "f.privacy": "Privacy Policy", "f.terms": "Terms of Use"
+},
+es: {
+  "sign.diesel": "Gasóleo", "sign.aria": "Cartel de precios estilo surtidor: gasóleo 1,57⁹, gasolina 95 1,63⁹, gasolina 98 1,74⁹ euros por litro",
+  "meta.title": "Pleno – Precios oficiales de carburante en España, Francia e Italia",
+  "meta.desc": "Pleno muestra los precios oficiales de todas las gasolineras de España, Francia e Italia y te dice cuál merece la pena de verdad. En el iPhone, en widgets y en CarPlay.",
+  "a11y.skip": "Ir al contenido", "a11y.nav": "Secciones", "a11y.lang": "Idioma", "a11y.footer": "Pie de página",
+  "nav.how": "Cómo funciona", "nav.carplay": "CarPlay", "nav.pro": "Pro", "nav.privacy": "Privacidad", "nav.get": "Descargar",
+  "hero.eyebrow": "Precios oficiales · iPhone y CarPlay",
+  "hero.title": "Paga menos cada vez que repostas.",
+  "hero.sub": "Precios oficiales de todas las gasolineras de España, Francia e Italia. Pleno te dice cuál merece la pena de verdad, con el desvío incluido, en el iPhone, en widgets y en CarPlay.",
+  "hero.note": "Gratis · Pleno Pro opcional",
+  "hero.countries": "España, Francia, Italia",
+  "hero.alt": "Pantalla de inicio de Pleno: un mapa de Madrid con los precios en colores y la mejor opción cerca de ti",
+  "badge.small": "Descárgalo en el", "badge.aria": "Descarga Pleno en el App Store",
+  "c.es": "España", "c.fr": "Francia", "c.it": "Italia",
+  "best.label": "Mejor opción cerca de ti", "best.save": "Ahorras 2,67 €", "best.per": "por depósito, con el desvío",
+  "demo.detour": "con el desvío", "demo.avg": "media",
+  "how.kicker": "Cómo funciona",
+  "how.title": "El mejor precio, de un vistazo",
+  "how.sub": "Pleno compara cada gasolinera con la media de la zona y calcula lo que ahorras de verdad, para tu coche.",
+  "how.1.t": "La mejor opción, no solo la más barata",
+  "how.1.d": "Pleno pesa el precio frente al desvío y te dice cuánto ahorras en un depósito lleno.",
+  "how.2.t": "El precio de tu depósito",
+  "how.2.d": "Cada gasolinera muestra lo que te cuesta llenar con tu coche, no solo el precio por litro.",
+  "how.3.t": "Colores que significan algo",
+  "how.3.d": "Los precios del mapa se ven en verde, ámbar o rojo según la media de la zona, siempre con la diferencia en céntimos.",
+  "how.fresh": "Precios publicados por el Ministerio y las autoridades de cada país, siempre con su antigüedad.",
+  "shots.kicker": "Capturas", "shots.title": "Tranquila, clara y precisa", "shots.aria": "Capturas de la app",
+  "shot.1": "El mejor precio, de un vistazo", "shot.2": "Tu depósito, por menos", "shot.3": "Planifica dónde repostar",
+  "shot.4": "También en CarPlay", "shot.5": "Lo que cuesta tu coche", "shot.6": "Pleno Pro",
+  "cp.kicker": "CarPlay y widgets",
+  "cp.title": "En la pantalla de tu coche",
+  "cp.sub": "Las mejores gasolineras por delante de ti, sin las que ya has dejado atrás. Un toque y en marcha.",
+  "cp.l1": "Gasolineras por delante, ordenadas por lo que ahorras",
+  "cp.l2": "Ruta con Apple Maps, Google Maps o Waze",
+  "cp.l3": "Un widget para el panel de CarPlay con la más barata cerca",
+  "cp.l4": "Widgets en la pantalla de inicio del iPhone",
+  "cp.alt": "Ilustración de Pleno en CarPlay: un mapa con precios y la lista de las mejores gasolineras por delante, y un widget con la más barata cerca",
+  "cp.tab1": "Mejor ahora", "cp.tab2": "Viaje", "cp.tab3": "Favoritas",
+  "cp.r1": "2,1 km · por delante", "cp.r2": "3,4 km · por delante", "cp.r3": "5,0 km · por delante",
+  "w.title": "La más barata cerca",
+  "car.kicker": "Mi coche",
+  "car.title": "Lo que cuesta de verdad tu coche",
+  "car.sub": "Indica tu depósito y consumo y verás lo que cuesta llenar, hasta dónde llegas y lo que gastas al mes.",
+  "car.tank": "Depósito", "car.use": "Consumo", "car.full": "Depósito lleno", "car.range": "Autonomía", "car.month": "Al mes (1.200 km)",
+  "pro.kicker": "Pleno Pro",
+  "pro.title": "No vuelvas a pagar de más por repostar",
+  "pro.sub": "Pleno Pro te dice cuándo y dónde repostar, en el iPhone y en CarPlay.",
+  "pro.f1.t": "Viajes", "pro.f1.d": "Pon tu destino y Pleno planifica dónde parar para que no te quedes corto y pagues menos. También en CarPlay.",
+  "pro.f2.t": "Alertas de precio", "pro.f2.d": "Entérate cuando tus gasolineras favoritas bajan el precio.",
+  "pro.f3.t": "El día más barato", "pro.f3.d": "El día de la semana en que suele estar más barato.",
+  "pro.f4.t": "Más widgets", "pro.f4.d": "Top 3 cerca, favoritas y pantalla de bloqueo.",
+  "plan.best": "Mejor precio", "plan.year": "Anual", "plan.year.per": "al año · 0,50 € al mes", "plan.trial": "7 días de prueba gratis",
+  "plan.life": "De por vida", "plan.life.per": "Un solo pago, Pro para siempre",
+  "pro.fine": "La suscripción se renueva automáticamente salvo que la canceles al menos 24 horas antes del final del periodo. Puedes gestionarla o cancelarla en los ajustes de tu cuenta de Apple. Precios en euros; pueden variar según el país.",
+  "tr.kicker": "Privacidad y datos",
+  "tr.title": "Sin cuentas. Sin anuncios. Sin rastreo.",
+  "tr.sub": "Tu ubicación no sale de tu iPhone. Para traer los precios, Pleno solo pide a las fuentes públicas la zona que estás mirando.",
+  "tr.1.t": "Sin cuentas", "tr.1.d": "Abre la app y listo. Nada que registrar, nada que recordar.",
+  "tr.2.t": "Sin anuncios", "tr.2.d": "Solo precios. Ni banners ni gasolineras patrocinadas.",
+  "tr.3.t": "Sin rastreo", "tr.3.d": "Sin SDKs de analítica, sin rastreadores de terceros, sin datos personales en ningún servidor.",
+  "tr.4.t": "Tu ubicación, en tu iPhone", "tr.4.d": "Solo se envía la zona de búsqueda a los servicios oficiales de precios, sin vincularla a ti.",
+  "src.title": "Fuentes oficiales",
+  "src.es": "Ministerio para la Transición Ecológica y el Reto Demográfico (MITECO)",
+  "src.fr": "prix-carburants, Ministerio de Economía · Licence Ouverte 2.0",
+  "src.it": "MIMIT, Osservaprezzi carburanti · IODL 2.0",
+  "src.note": "Pleno no está afiliada ni respaldada por ninguna de estas administraciones.",
+  "src.link": "Lee la política de privacidad",
+  "final.title": "Reposta por menos, desde hoy.",
+  "final.sub": "Descarga gratuita. En español, catalán, euskera, gallego, inglés, francés e italiano.",
+  "f.support": "Soporte", "f.privacy": "Política de privacidad", "f.terms": "Condiciones de uso"
+},
+fr: {
+  "sign.diesel": "Gazole", "sign.aria": "Panneau de prix façon station : gazole 1,57⁹, SP95 1,63⁹, SP98 1,74⁹ euros le litre",
+  "meta.title": "Pleno – Prix officiels des carburants en France, Espagne et Italie",
+  "meta.desc": "Pleno affiche les prix officiels de toutes les stations de France, d’Espagne et d’Italie et vous dit laquelle vaut vraiment le détour. Sur iPhone, en widgets et dans CarPlay.",
+  "a11y.skip": "Aller au contenu", "a11y.nav": "Sections", "a11y.lang": "Langue", "a11y.footer": "Pied de page",
+  "nav.how": "Fonctionnement", "nav.carplay": "CarPlay", "nav.pro": "Pro", "nav.privacy": "Confidentialité", "nav.get": "Télécharger",
+  "hero.eyebrow": "Prix officiels · iPhone et CarPlay",
+  "hero.title": "Payez moins à chaque plein.",
+  "hero.sub": "Les prix officiels de toutes les stations de France, d’Espagne et d’Italie. Pleno vous dit laquelle vaut vraiment le détour, sur iPhone, en widgets et dans CarPlay.",
+  "hero.note": "Gratuit · Pleno Pro en option",
+  "hero.countries": "Espagne, France, Italie",
+  "hero.alt": "Écran d’accueil de Pleno : une carte de Madrid avec les prix en couleur et le meilleur choix près de vous",
+  "badge.small": "Télécharger dans l’", "badge.aria": "Télécharger Pleno dans l’App Store",
+  "c.es": "Espagne", "c.fr": "France", "c.it": "Italie",
+  "best.label": "Meilleur choix près de vous", "best.save": "2,67 € économisés", "best.per": "par plein, détour compris",
+  "demo.detour": "détour compris", "demo.avg": "moyenne",
+  "how.kicker": "Fonctionnement",
+  "how.title": "Le meilleur prix, en un coup d’œil",
+  "how.sub": "Pleno compare chaque station à la moyenne du secteur et calcule ce que vous économisez vraiment, pour votre voiture.",
+  "how.1.t": "Le meilleur choix, pas seulement le moins cher",
+  "how.1.d": "Pleno met en balance le prix et le détour et vous dit combien vous économisez sur un plein.",
+  "how.2.t": "Le prix de votre plein",
+  "how.2.d": "Chaque station affiche ce que coûte un plein pour votre voiture, pas seulement le prix au litre.",
+  "how.3.t": "Des couleurs qui ont du sens",
+  "how.3.d": "Sur la carte, les prix passent au vert, à l’ambre ou au rouge selon la moyenne du secteur, toujours avec l’écart en centimes.",
+  "how.fresh": "Des prix publiés par les autorités de chaque pays, toujours avec leur date de mise à jour.",
+  "shots.kicker": "Captures d’écran", "shots.title": "Calme, claire et précise", "shots.aria": "Captures d’écran de l’app",
+  "shot.1": "Le meilleur prix, en un coup d’œil", "shot.2": "Votre plein, moins cher", "shot.3": "Prévoyez où faire le plein",
+  "shot.4": "Aussi dans CarPlay", "shot.5": "Ce que coûte votre voiture", "shot.6": "Pleno Pro",
+  "cp.kicker": "CarPlay et widgets",
+  "cp.title": "Sur l’écran de votre voiture",
+  "cp.sub": "Les meilleures stations devant vous, sans celles que vous avez déjà dépassées. Un toucher et c’est parti.",
+  "cp.l1": "Les stations devant vous, classées selon l’économie",
+  "cp.l2": "Itinéraire dans Plans, Google Maps ou Waze",
+  "cp.l3": "Un widget pour le tableau de bord CarPlay avec la station la moins chère",
+  "cp.l4": "Des widgets sur l’écran d’accueil de l’iPhone",
+  "cp.alt": "Illustration de Pleno dans CarPlay : une carte avec les prix et la liste des meilleures stations devant vous, et un widget avec la moins chère à proximité",
+  "cp.tab1": "Le mieux", "cp.tab2": "Trajet", "cp.tab3": "Favoris",
+  "cp.r1": "2,1 km · devant", "cp.r2": "3,4 km · devant", "cp.r3": "5,0 km · devant",
+  "w.title": "La moins chère",
+  "car.kicker": "Ma voiture",
+  "car.title": "Ce que coûte vraiment votre voiture",
+  "car.sub": "Indiquez votre réservoir et votre consommation pour voir le prix d’un plein, votre autonomie et vos dépenses mensuelles.",
+  "car.tank": "Réservoir", "car.use": "Consommation", "car.full": "Le plein", "car.range": "Autonomie", "car.month": "Par mois (1 200 km)",
+  "pro.kicker": "Pleno Pro",
+  "pro.title": "Ne payez plus jamais trop cher votre carburant",
+  "pro.sub": "Pleno Pro vous dit quand et où faire le plein, sur iPhone et dans CarPlay.",
+  "pro.f1.t": "Trajets", "pro.f1.d": "Indiquez votre destination et Pleno planifie où vous arrêter pour ne jamais être à court et payer moins. Aussi dans CarPlay.",
+  "pro.f2.t": "Alertes de prix", "pro.f2.d": "Soyez prévenu quand vos stations favorites baissent leurs prix.",
+  "pro.f3.t": "Le jour le moins cher", "pro.f3.d": "Le jour de la semaine où le carburant est généralement le moins cher.",
+  "pro.f4.t": "Plus de widgets", "pro.f4.d": "Top 3, favoris et écran verrouillé.",
+  "plan.best": "Meilleure offre", "plan.year": "Annuel", "plan.year.per": "par an · 0,50 € par mois", "plan.trial": "7 jours d’essai gratuit",
+  "plan.life": "À vie", "plan.life.per": "Un seul paiement, Pro pour toujours",
+  "pro.fine": "L’abonnement se renouvelle automatiquement sauf résiliation au moins 24 heures avant la fin de la période en cours. Gérez-le ou résiliez-le dans les réglages de votre compte Apple. Prix en euros, susceptibles de varier selon le pays.",
+  "tr.kicker": "Confidentialité et données",
+  "tr.title": "Sans compte. Sans publicité. Sans suivi.",
+  "tr.sub": "Votre position reste sur votre iPhone. Pour obtenir les prix, Pleno demande seulement aux sources publiques la zone que vous consultez.",
+  "tr.1.t": "Sans compte", "tr.1.d": "Ouvrez l’app et c’est parti. Rien à créer, rien à retenir.",
+  "tr.2.t": "Sans publicité", "tr.2.d": "Seulement des prix. Ni bannières ni stations sponsorisées.",
+  "tr.3.t": "Sans suivi", "tr.3.d": "Aucun SDK d’analyse, aucun traceur tiers, aucune donnée personnelle sur un serveur.",
+  "tr.4.t": "Votre position reste chez vous", "tr.4.d": "Seule la zone de recherche est envoyée aux services officiels de prix, sans lien avec vous.",
+  "src.title": "Sources officielles",
+  "src.es": "Ministère espagnol de la Transition écologique (MITECO)",
+  "src.fr": "prix-carburants, ministère de l’Économie · Licence Ouverte 2.0",
+  "src.it": "MIMIT, Osservaprezzi carburanti · IODL 2.0",
+  "src.note": "Pleno n’est ni affiliée ni approuvée par aucune de ces administrations.",
+  "src.link": "Lire la politique de confidentialité",
+  "final.title": "Faites le plein pour moins cher, dès aujourd’hui.",
+  "final.sub": "Téléchargement gratuit. En français, anglais, espagnol, italien, catalan, basque et galicien.",
+  "f.support": "Assistance", "f.privacy": "Politique de confidentialité", "f.terms": "Conditions d’utilisation"
+},
+it: {
+  "sign.diesel": "Gasolio", "sign.aria": "Cartello prezzi da distributore: gasolio 1,57⁹, benzina 95 1,63⁹, benzina 98 1,74⁹ euro al litro",
+  "meta.title": "Pleno – Prezzi ufficiali dei carburanti in Italia, Spagna e Francia",
+  "meta.desc": "Pleno mostra i prezzi ufficiali di tutti i distributori in Italia, Spagna e Francia e ti dice quale conviene davvero. Su iPhone, nei widget e in CarPlay.",
+  "a11y.skip": "Vai al contenuto", "a11y.nav": "Sezioni", "a11y.lang": "Lingua", "a11y.footer": "Piè di pagina",
+  "nav.how": "Come funziona", "nav.carplay": "CarPlay", "nav.pro": "Pro", "nav.privacy": "Privacy", "nav.get": "Scarica",
+  "hero.eyebrow": "Prezzi ufficiali · iPhone e CarPlay",
+  "hero.title": "Paga meno a ogni pieno.",
+  "hero.sub": "I prezzi ufficiali di tutti i distributori in Italia, Spagna e Francia. Pleno ti dice quale conviene davvero, deviazione inclusa, su iPhone, nei widget e in CarPlay.",
+  "hero.note": "Gratis · Pleno Pro facoltativo",
+  "hero.countries": "Spagna, Francia, Italia",
+  "hero.alt": "Schermata principale di Pleno: una mappa di Madrid con i prezzi colorati e la scelta migliore vicino a te",
+  "badge.small": "Scarica su", "badge.aria": "Scarica Pleno su App Store",
+  "c.es": "Spagna", "c.fr": "Francia", "c.it": "Italia",
+  "best.label": "Scelta migliore vicino a te", "best.save": "Risparmi 2,67 €", "best.per": "a pieno, deviazione inclusa",
+  "demo.detour": "deviazione inclusa", "demo.avg": "media",
+  "how.kicker": "Come funziona",
+  "how.title": "Il prezzo migliore, a colpo d’occhio",
+  "how.sub": "Pleno confronta ogni distributore con la media della zona e calcola quanto risparmi davvero, per la tua auto.",
+  "how.1.t": "La scelta migliore, non solo la più economica",
+  "how.1.d": "Pleno mette a confronto prezzo e deviazione e ti dice quanto risparmi su un pieno.",
+  "how.2.t": "Il prezzo del tuo pieno",
+  "how.2.d": "Ogni distributore mostra quanto costa fare il pieno alla tua auto, non solo il prezzo al litro.",
+  "how.3.t": "Colori che dicono qualcosa",
+  "how.3.d": "Sulla mappa i prezzi diventano verdi, ambra o rossi rispetto alla media della zona, sempre con la differenza in centesimi.",
+  "how.fresh": "Prezzi pubblicati dalle autorità di ogni paese, sempre con la loro data.",
+  "shots.kicker": "Schermate", "shots.title": "Calma, chiara e precisa", "shots.aria": "Schermate dell’app",
+  "shot.1": "Il prezzo migliore, a colpo d’occhio", "shot.2": "Il tuo pieno, a meno", "shot.3": "Pianifica dove fare il pieno",
+  "shot.4": "Anche in CarPlay", "shot.5": "Quanto costa la tua auto", "shot.6": "Pleno Pro",
+  "cp.kicker": "CarPlay e widget",
+  "cp.title": "Sullo schermo della tua auto",
+  "cp.sub": "I distributori migliori davanti a te, senza quelli che hai già superato. Un tocco e si parte.",
+  "cp.l1": "Distributori davanti a te, in ordine di risparmio",
+  "cp.l2": "Indicazioni con Mappe, Google Maps o Waze",
+  "cp.l3": "Un widget per la dashboard di CarPlay con il più economico vicino",
+  "cp.l4": "Widget nella schermata Home dell’iPhone",
+  "cp.alt": "Illustrazione di Pleno in CarPlay: una mappa con i prezzi e l’elenco dei distributori migliori davanti a te, più un widget con il più economico vicino",
+  "cp.tab1": "Il migliore", "cp.tab2": "Viaggio", "cp.tab3": "Preferiti",
+  "cp.r1": "2,1 km · davanti", "cp.r2": "3,4 km · davanti", "cp.r3": "5,0 km · davanti",
+  "w.title": "Il più economico",
+  "car.kicker": "La mia auto",
+  "car.title": "Quanto costa davvero la tua auto",
+  "car.sub": "Inserisci serbatoio e consumo per vedere quanto costa un pieno, quanta strada fai e quanto spendi al mese.",
+  "car.tank": "Serbatoio", "car.use": "Consumo", "car.full": "Il pieno", "car.range": "Autonomia", "car.month": "Al mese (1.200 km)",
+  "pro.kicker": "Pleno Pro",
+  "pro.title": "Non pagare mai più troppo il carburante",
+  "pro.sub": "Pleno Pro ti dice quando e dove fare il pieno, su iPhone e in CarPlay.",
+  "pro.f1.t": "Viaggi", "pro.f1.d": "Inserisci la destinazione e Pleno pianifica dove fermarti per non restare a secco e pagare meno. Anche in CarPlay.",
+  "pro.f2.t": "Avvisi di prezzo", "pro.f2.d": "Sappi quando i tuoi distributori preferiti abbassano i prezzi.",
+  "pro.f3.t": "Il giorno più economico", "pro.f3.d": "Il giorno della settimana in cui di solito costa meno.",
+  "pro.f4.t": "Più widget", "pro.f4.d": "Top 3, preferiti e schermata di blocco.",
+  "plan.best": "Più conveniente", "plan.year": "Annuale", "plan.year.per": "all’anno · 0,50 € al mese", "plan.trial": "7 giorni di prova gratuita",
+  "plan.life": "A vita", "plan.life.per": "Un solo pagamento, Pro per sempre",
+  "pro.fine": "L’abbonamento si rinnova automaticamente salvo disdetta almeno 24 ore prima della fine del periodo in corso. Puoi gestirlo o disdirlo nelle impostazioni del tuo account Apple. Prezzi in euro; possono variare in base al paese.",
+  "tr.kicker": "Privacy e dati",
+  "tr.title": "Nessun account. Nessuna pubblicità. Nessun tracciamento.",
+  "tr.sub": "La tua posizione resta sul tuo iPhone. Per ottenere i prezzi, Pleno chiede alle fonti pubbliche solo la zona che stai guardando.",
+  "tr.1.t": "Nessun account", "tr.1.d": "Apri l’app e via. Niente da registrare, niente da ricordare.",
+  "tr.2.t": "Nessuna pubblicità", "tr.2.d": "Solo prezzi. Niente banner, niente distributori sponsorizzati.",
+  "tr.3.t": "Nessun tracciamento", "tr.3.d": "Nessun SDK di analisi, nessun tracker di terze parti, nessun dato personale su server.",
+  "tr.4.t": "La posizione resta sul dispositivo", "tr.4.d": "Ai servizi ufficiali dei prezzi si invia solo la zona di ricerca, mai collegata a te.",
+  "src.title": "Fonti ufficiali",
+  "src.es": "Ministero spagnolo per la Transizione Ecologica (MITECO)",
+  "src.fr": "prix-carburants, Ministero dell’Economia francese · Licence Ouverte 2.0",
+  "src.it": "Fonte: MIMIT, Osservaprezzi carburanti · IODL 2.0",
+  "src.note": "Pleno non è affiliata né approvata da nessuna di queste amministrazioni.",
+  "src.link": "Leggi l’informativa sulla privacy",
+  "final.title": "Fai il pieno spendendo meno, da oggi.",
+  "final.sub": "Download gratuito. In italiano, inglese, spagnolo, francese, catalano, basco e galiziano.",
+  "f.support": "Assistenza", "f.privacy": "Informativa sulla privacy", "f.terms": "Termini d’uso"
+}
+};
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>
