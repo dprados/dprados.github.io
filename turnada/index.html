@@ -42,6 +42,7 @@
     <a class="brand" href="./"><img src="img/icon-192.png" alt="" width="34" height="34">Turnada</a>
     <nav class="nav-links" aria-label="Secciones">
       <a href="#funciones">Funciones</a>
+      <a href="#conecta">Calendario</a>
       <a href="#widgets">Widgets</a>
       <a href="#diferente">Por qué Turnada</a>
       <a href="#precio">Precio</a>
@@ -196,18 +197,17 @@
 
       <article class="feature">
         <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 10v3.5l2 1.5M5 4L3 6M19 4l2 2"/></svg></div>
-        <h3>Despertadores y avisos</h3>
+        <h3>Avisos de descanso</h3>
         <ul class="ticks">
-          <li>Despertador según el turno y recordatorios</li>
           <li>Aviso si no descansas 12 h entre jornadas (11 h en Alemania)<span class="pro">Pro</span></li>
+          <li>Recordatorio la noche antes y antes de cada turno</li>
         </ul>
       </article>
 
       <article class="feature">
         <div class="ico" style="--ic: color-mix(in srgb, var(--violet) 20%, var(--surface)); --ict: var(--violet)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 14h6M9 17h4"/></svg></div>
-        <h3>Exporta y guarda</h3>
+        <h3>Copias y colores</h3>
         <ul class="ticks">
-          <li>PDF del mes, al calendario o a una hoja de cálculo<span class="pro">Pro</span></li>
           <li>Copia de seguridad en un archivo</li>
           <li>Sincronización con iCloud en iPhone y iPad</li>
           <li>32 colores para tus turnos, o el que tú quieras</li>
@@ -217,7 +217,51 @@
   </div>
 </section>
 
-<section id="widgets" class="alt">
+<section id="conecta" class="alt">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Conectada con tu móvil</p>
+      <h2>Tu calendario, tus archivos y tu despertador, al ritmo de tus turnos</h2>
+      <p class="sub">Turnada no vive aislada: se entiende con el calendario de tu móvil, saca tu cuadrante en PDF o Excel y te despierta a la hora que toca cada turno.</p>
+    </div>
+    <div class="connect">
+      <article class="feature">
+        <div class="mock sync" aria-hidden="true">
+          <div class="mini"><p>Turnada</p><div class="ev shift"><b>M</b><span>Mañana<small>7:00–15:00</small></span></div><div class="ev"><i></i><span>Médico<small>17:30</small></span></div></div>
+          <svg class="swap" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h13l-3.5-3.5M19 15H6l3.5 3.5"/></svg>
+          <div class="mini"><p>Calendario</p><div class="ev shift"><b>M</b><span>Mañana<small>7:00–15:00</small></span></div><div class="ev"><i></i><span>Médico<small>17:30</small></span></div></div>
+        </div>
+        <h3>Tu calendario del móvil y tus turnos, en los dos sitios</h3>
+        <ul class="ticks">
+          <li>Ve las citas de tu calendario (iCloud, Google, Outlook…) en cada día, junto a tu turno</li>
+          <li>Añade un evento desde Turnada: se guarda en el calendario del móvil y lo ves en los dos</li>
+          <li>Pasa tus turnos de los próximos 3 meses al calendario del móvil, o llévatelos en un archivo .ics<span class="pro">Pro</span></li>
+        </ul>
+      </article>
+      <article class="feature">
+        <div class="mock files" aria-hidden="true"><div class="file f-pdf"><b>PDF</b><span>Mes o año</span></div><div class="file f-csv"><b>CSV</b><span>Excel · Sheets</span></div><div class="file f-ics"><b>ICS</b><span>Calendario</span></div></div>
+        <h3>Exporta a PDF y Excel<span class="pro">Pro</span></h3>
+        <ul class="ticks">
+          <li>PDF del mes o del año entero, listo para imprimir o enviar por WhatsApp</li>
+          <li>Hoja de cálculo del año en CSV: se abre en Excel, Numbers o Google Sheets</li>
+          <li>Archivo de calendario (.ics) con los próximos 12 meses para Google Calendar u Outlook</li>
+        </ul>
+      </article>
+      <article class="feature">
+        <div class="mock alarms" aria-hidden="true"><div class="al"><b style="--c: var(--sun); --t: var(--sun-t)">M</b><span>Mañana</span><time>5:45</time><i aria-hidden="true"></i></div><div class="al"><b style="--c: var(--coral); --t: var(--coral-t)">T</b><span>Tarde</span><time>12:30</time><i aria-hidden="true"></i></div><div class="al off"><b style="--c: var(--night); --t: var(--night-t)">N</b><span>Noche</span><time>20:30</time><i aria-hidden="true"></i></div></div>
+        <h3>Un despertador para cada turno<span class="free">Gratis</span></h3>
+        <ul class="ticks">
+          <li>Pon la hora de la alarma de cada tipo de turno: suena solo los días que trabajas ese turno</li>
+          <li>Se programa sola cuando cambias un turno, sin tocar el reloj</li>
+          <li>En iPhone con iOS 26 o posterior suena como la alarma del Reloj, incluso en silencio</li>
+          <li>Recordatorio la noche antes y un rato antes de cada turno</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="widgets">
   <div class="wrap">
     <div class="head">
       <p class="eyebrow">Widgets</p>
@@ -240,7 +284,7 @@
   </div>
 </section>
 
-<section id="diferente">
+<section id="diferente" class="alt">
   <div class="wrap">
     <div class="head">
       <p class="eyebrow">Por qué Turnada</p>
@@ -262,7 +306,7 @@
   </div>
 </section>
 
-<section id="privacidad" class="alt">
+<section id="privacidad">
   <div class="wrap">
     <div class="privacy-band">
       <h2>Tus turnos son tuyos</h2>
@@ -278,7 +322,7 @@
   </div>
 </section>
 
-<section id="precio">
+<section id="precio" class="alt">
   <div class="wrap">
     <div class="head center">
       <p class="eyebrow">Precio</p>
@@ -294,9 +338,9 @@
           <li>Modo pintar y selección múltiple</li>
           <li>Festivos de tu región y locales</li>
           <li>Notas, cambios y horas extra en cada día</li>
-          <li>Tus eventos del calendario junto a tus turnos</li>
+          <li>Tus eventos del calendario junto a tus turnos, y añade eventos desde Turnada</li>
           <li>Widgets de hoy y próximos días</li>
-          <li>Despertadores por turno y recordatorios</li>
+          <li>Un despertador para cada turno y recordatorios</li>
           <li>Copia de seguridad y sincronización con iCloud</li>
           <li>El cuadrante de una persona más</li>
         </ul>
@@ -310,7 +354,7 @@
           <li>Cambios de turno: quién debe a quién</li>
           <li>Más personas</li>
           <li>Importar el cuadrante desde una foto</li>
-          <li>Exportar a PDF, calendario y hoja de cálculo</li>
+          <li>Exportar a PDF, Excel (CSV) y al calendario del móvil</li>
           <li>Avisos de descanso entre jornadas</li>
           <li>Widgets de mes y de pluses</li>
         </ul>
@@ -320,7 +364,7 @@
   </div>
 </section>
 
-<section class="alt cta">
+<section class="cta">
   <div class="wrap">
     <img src="img/icon-256.png" alt="" width="96" height="96" loading="lazy">
     <h2>Deja de hacer cuentas a mano</h2>

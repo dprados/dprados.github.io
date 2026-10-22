@@ -42,6 +42,7 @@
     <a class="brand" href="./"><img src="../img/icon-192.png" alt="" width="34" height="34">Turnada</a>
     <nav class="nav-links" aria-label="Sections">
       <a href="#features">Features</a>
+      <a href="#calendar">Calendar</a>
       <a href="#widgets">Widgets</a>
       <a href="#why">Why Turnada</a>
       <a href="#pricing">Pricing</a>
@@ -196,18 +197,17 @@
 
       <article class="feature">
         <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 10v3.5l2 1.5M5 4L3 6M19 4l2 2"/></svg></div>
-        <h3>Alarms and heads-ups</h3>
+        <h3>Rest-time heads-ups</h3>
         <ul class="ticks">
-          <li>Wake-up alarms per shift, and reminders</li>
           <li>A warning when you get less than 12 h rest between shifts (11 h in Germany)<span class="pro">Pro</span></li>
+          <li>A reminder the evening before and before each shift</li>
         </ul>
       </article>
 
       <article class="feature">
         <div class="ico" style="--ic: color-mix(in srgb, var(--violet) 20%, var(--surface)); --ict: var(--violet)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 14h6M9 17h4"/></svg></div>
-        <h3>Export and back up</h3>
+        <h3>Backups and colours</h3>
         <ul class="ticks">
-          <li>Monthly PDF, export to your calendar or a spreadsheet<span class="pro">Pro</span></li>
           <li>Backup to a file</li>
           <li>iCloud sync on iPhone and iPad</li>
           <li>32 colours for your shifts, or any colour you like</li>
@@ -217,7 +217,51 @@
   </div>
 </section>
 
-<section id="widgets" class="alt">
+<section id="calendar" class="alt">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Works with your phone</p>
+      <h2>Your calendar, your files and your alarm clock, in step with your shifts</h2>
+      <p class="sub">Turnada doesn't live on an island: it talks to your phone's calendar, exports your shifts to PDF or Excel and wakes you up at the right time for each shift.</p>
+    </div>
+    <div class="connect">
+      <article class="feature">
+        <div class="mock sync" aria-hidden="true">
+          <div class="mini"><p>Turnada</p><div class="ev shift"><b>E</b><span>Early<small>7:00–15:00</small></span></div><div class="ev"><i></i><span>Doctor<small>17:30</small></span></div></div>
+          <svg class="swap" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h13l-3.5-3.5M19 15H6l3.5 3.5"/></svg>
+          <div class="mini"><p>Calendar</p><div class="ev shift"><b>E</b><span>Early<small>7:00–15:00</small></span></div><div class="ev"><i></i><span>Doctor<small>17:30</small></span></div></div>
+        </div>
+        <h3>Your phone's calendar and your shifts, in both places</h3>
+        <ul class="ticks">
+          <li>See the events from your calendar (iCloud, Google, Outlook…) on each day, next to your shift</li>
+          <li>Add an event from Turnada: it's saved to your phone's calendar, so you see it in both</li>
+          <li>Send the next 3 months of shifts to your phone's calendar, or take them anywhere as an .ics file<span class="pro">Pro</span></li>
+        </ul>
+      </article>
+      <article class="feature">
+        <div class="mock files" aria-hidden="true"><div class="file f-pdf"><b>PDF</b><span>Month or year</span></div><div class="file f-csv"><b>CSV</b><span>Excel · Sheets</span></div><div class="file f-ics"><b>ICS</b><span>Calendar</span></div></div>
+        <h3>Export to PDF and Excel<span class="pro">Pro</span></h3>
+        <ul class="ticks">
+          <li>A PDF of the month or the whole year, ready to print or send on WhatsApp</li>
+          <li>A spreadsheet of the year in CSV: opens in Excel, Numbers or Google Sheets</li>
+          <li>A calendar file (.ics) with the next 12 months for Google Calendar or Outlook</li>
+        </ul>
+      </article>
+      <article class="feature">
+        <div class="mock alarms" aria-hidden="true"><div class="al"><b style="--c: var(--sun); --t: var(--sun-t)">E</b><span>Early</span><time>5:45</time><i aria-hidden="true"></i></div><div class="al"><b style="--c: var(--coral); --t: var(--coral-t)">L</b><span>Late</span><time>12:30</time><i aria-hidden="true"></i></div><div class="al off"><b style="--c: var(--night); --t: var(--night-t)">N</b><span>Night</span><time>20:30</time><i aria-hidden="true"></i></div></div>
+        <h3>A wake-up alarm for every shift<span class="free">Free</span></h3>
+        <ul class="ticks">
+          <li>Set an alarm time for each shift type: it only rings on the days you work that shift</li>
+          <li>It reschedules itself when you change a shift, no fiddling with the clock</li>
+          <li>On iPhone with iOS 26 or later it rings like the Clock app alarm, even in silent mode</li>
+          <li>A reminder the evening before and shortly before each shift</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="widgets">
   <div class="wrap">
     <div class="head">
       <p class="eyebrow">Widgets</p>
@@ -240,7 +284,7 @@
   </div>
 </section>
 
-<section id="why">
+<section id="why" class="alt">
   <div class="wrap">
     <div class="head">
       <p class="eyebrow">Why Turnada</p>
@@ -262,7 +306,7 @@
   </div>
 </section>
 
-<section id="privacy" class="alt">
+<section id="privacy">
   <div class="wrap">
     <div class="privacy-band">
       <h2>Your shifts are yours</h2>
@@ -278,7 +322,7 @@
   </div>
 </section>
 
-<section id="pricing">
+<section id="pricing" class="alt">
   <div class="wrap">
     <div class="head center">
       <p class="eyebrow">Pricing</p>
@@ -294,9 +338,9 @@
           <li>Paint mode and multi-select</li>
           <li>Public holidays for your region, plus local ones</li>
           <li>Notes, changes and extra hours on any day</li>
-          <li>Your calendar events next to your shifts</li>
+          <li>Your calendar events next to your shifts, and add events from Turnada</li>
           <li>Today and next-days widgets</li>
-          <li>Wake-up alarms per shift, and reminders</li>
+          <li>A wake-up alarm for every shift, and reminders</li>
           <li>Backup file and iCloud sync</li>
           <li>One other person's shifts</li>
         </ul>
@@ -310,7 +354,7 @@
           <li>Shift swaps: who owes whom</li>
           <li>More people</li>
           <li>Import your shifts from a photo</li>
-          <li>Export to PDF, calendar and spreadsheet</li>
+          <li>Export to PDF, Excel (CSV) and your phone's calendar</li>
           <li>Rest-time warnings between shifts</li>
           <li>Month and bonus widgets</li>
         </ul>
@@ -320,7 +364,7 @@
   </div>
 </section>
 
-<section class="alt cta">
+<section class="cta">
   <div class="wrap">
     <img src="../img/icon-256.png" alt="" width="96" height="96" loading="lazy">
     <h2>Stop doing the maths by hand</h2>

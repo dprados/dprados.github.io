@@ -257,7 +257,7 @@ h2 { font-size: clamp(1.8rem, 5.6vw, 2.6rem); line-height: 1.12; letter-spacing:
 .wlist .thumb img { max-height: 92px; width: auto; max-width: 100%; filter: drop-shadow(0 4px 10px rgba(20, 21, 42, .14)); }
 .wlist b { font-size: 1rem; font-weight: 800; letter-spacing: -.005em; }
 .wlist span:not(.pro):not(.free) { font-size: .9rem; color: var(--text-2); line-height: 1.4; }
-.wlist .free { display: inline-block; vertical-align: middle; font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 7px; background: color-mix(in srgb, var(--positive) 16%, var(--surface)); color: var(--positive); margin-left: 6px; position: relative; top: -1px; }
+.free, .wlist .free { display: inline-block; vertical-align: middle; font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 7px; background: color-mix(in srgb, var(--positive) 16%, var(--surface)); color: var(--positive); margin-left: 6px; position: relative; top: -1px; }
 .wlist li.lockw { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 14px; }
 .wlist li.lockw img { width: 132px; height: auto; border-radius: 14px; flex: none; }
 .android { margin-top: 18px; display: flex; gap: 10px; align-items: flex-start; font-size: .95rem; color: var(--text-2); background: var(--surface); border: 1px dashed var(--line); border-radius: 16px; padding: 12px 14px; }
@@ -267,6 +267,40 @@ h2 { font-size: clamp(1.8rem, 5.6vw, 2.6rem); line-height: 1.12; letter-spacing:
   .wlist .thumb { height: 110px; }
   .wlist .thumb img { max-height: 110px; }
 }
+
+/* Connected: phone calendar, export, wake-up alarms (illustrations drawn in CSS, no screenshots) */
+.connect { display: grid; gap: 18px; }
+.connect .feature { display: flex; flex-direction: column; }
+.connect .feature h3 { font-size: 1.28rem; }
+.mock { background: var(--bg-alt); border: 1px solid var(--line); border-radius: 18px; padding: 14px 12px; margin-bottom: 20px; min-height: 152px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.alt .mock { background: var(--bg); }
+.mock.sync .mini { flex: 1; min-width: 0; background: var(--surface); border-radius: 14px; padding: 9px 7px; box-shadow: var(--shadow); display: grid; gap: 6px; }
+.mock.sync .mini p { font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); }
+.mock .ev { display: flex; align-items: center; gap: 6px; font-size: .74rem; font-weight: 700; line-height: 1.25; padding: 5px 5px; border-radius: 8px; background: var(--bg-alt); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.mock .ev b { flex: none; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 6px; font-size: .72rem; background: var(--sun); color: var(--sun-t); }
+.mock .ev span { display: grid; min-width: 0; }
+.mock .ev small { font-size: .68rem; font-weight: 600; color: var(--text-2); }
+.mock .ev i { flex: none; width: 8px; height: 8px; margin: 0 5px; border-radius: 50%; background: #E5484D; }
+.mock .swap { flex: none; width: 26px; height: 26px; padding: 5px; border-radius: 50%; background: var(--brand); stroke: #fff; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; box-shadow: var(--shadow); }
+.mock.files { gap: 12px; }
+.file { position: relative; width: 78px; height: 100px; border-radius: 10px 22px 10px 10px; background: var(--surface); box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 10px 4px; gap: 4px; }
+.file::before { content: ""; position: absolute; top: 14px; left: 14px; right: 22px; height: 26px; border-radius: 4px; background: repeating-linear-gradient(var(--line) 0 3px, transparent 3px 7px); }
+.file b { font-size: .8rem; font-weight: 900; letter-spacing: .04em; color: #fff; background: var(--fc); padding: 2px 8px; border-radius: 6px; }
+.file span { font-size: .66rem; font-weight: 700; color: var(--text-2); text-align: center; line-height: 1.2; }
+.f-pdf { --fc: #D93A3A; } .f-csv { --fc: #1F8A4C; } .f-ics { --fc: var(--indigo); }
+.file:nth-child(1) { transform: rotate(-5deg); } .file:nth-child(3) { transform: rotate(5deg); }
+.mock.alarms { flex-direction: column; align-items: stretch; gap: 8px; }
+.al { display: flex; align-items: center; gap: 10px; background: var(--surface); border-radius: 12px; padding: 8px 10px; box-shadow: var(--shadow); }
+.al b { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; font-size: .8rem; font-weight: 900; background: var(--c); color: var(--t); }
+.al span { flex: 1; font-weight: 700; font-size: .9rem; }
+.al time { font-weight: 900; font-size: 1.15rem; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.al i { flex: none; width: 36px; height: 22px; border-radius: 999px; background: var(--positive); position: relative; }
+.al i::after { content: ""; position: absolute; top: 2px; right: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, .2); }
+.al.off time { color: var(--text-3); }
+.al.off i { background: var(--slate); }
+.al.off i::after { right: auto; left: 2px; }
+@media (min-width: 900px) { .connect { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 640px) and (max-width: 899px) { .connect { grid-template-columns: 1fr 1fr; } .connect .feature:first-child { grid-column: 1 / -1; } }
 
 /* Professions */
 .jobs { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; list-style: none; }
